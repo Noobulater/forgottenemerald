@@ -1,0 +1,165 @@
+import("ScarUtil.scar")
+
+Survive.Requirement = { }
+
+local Requirement = Survive.Requirement
+
+function Requirement.Check(self, target, requirement)
+	if (type(requirement) == "table") then
+		for k, v in pairs(requirement) do
+			if (type(v) == "table") and (type(v.name) == "string") then
+				if (type(Survive.Requirement[v.name]) == "function") then
+					if not (Survive.Requirement[v.name](self, target, v)) then
+						return false
+					end
+				else
+					PrintObject(v)
+					fatal("Invalid Survive.Requirement data, function not found") 
+				end
+			else
+				print(type(v))
+				PrintObject(v)
+				fatal("Invalid Survive.Requirement data, expected object was a table or object.name was a string, one failed")
+			end
+		end
+		
+		return true
+	else
+		return true
+	end
+end
+
+function Requirement.CheckDebug(self, target, requirement)
+	if (type(requirement) == "table") then
+		for k, v in pairs(requirement) do
+			if (type(v) == "table") and (type(v.name) == "string") then
+				if (type(Survive.Requirement[v.name]) == "function") then
+					if not (Survive.Requirement[v.name](self, target, v)) then
+						print("Requirement: "..v.name.." failed")
+						return false
+					else
+						print(v.name.." passed requirement")
+					end
+				else
+					PrintObject(v)
+					fatal("Invalid Survive.Requirement data, function not found") 
+				end
+			else
+				PrintObject(v)
+				fatal("Invalid Survive.Requirement data, expected object was a table or object.name was a string, one failed")
+			end
+		end
+		
+		return true
+	else
+		return true
+	end
+	print("Requirement got passed in a "..type(requirement)..", it needs a table")
+end
+
+-- Requirement: IsNearEnemy
+-- params: distance = number(distance in game meters)
+
+function Requirement.IsNearEnemy(self, target, params)
+	local distance = params.distance or 10
+	local enemyTeam = Survive.Targeting.GetEnemyTeam(self, params)
+	local sgroup = SGroup_Create("")
+	Team_GetAllSquadsNearMarker(enemyTeam, sgroup, Util_GetPosition(self.sgroup), distance)
+	if (SGroup_CountSpawned(sgroup) > 0) then
+		return true
+	else
+		return false
+	end
+end
+
+-- Requirement: IsDamaged
+-- params: percent = number(between 0 and 100)
+
+function Requirement.IsDamaged(self, target, params)
+	local percent = params.percent*0.01 or 0.99
+	if (SGroup_GetAvgHealth(self.sgroup) < percent) then
+		return true
+	else
+		return false
+	end
+end
+
+-- Requirement: RechargeTime
+-- params: min = number, max = number, initialRecharge = boolean, id = anything
+
+function Requirement.RechargeTime(self, target, params)
+	params.id = params.id or tostring(params)
+	self.rechargeMultiplier = self.rechargeMultiplier or 1
+	
+	local rechargeTime = self.requirementData["RechargeTime"..tostring(params.id)] or ((World_GetRand(params.min, params.max) * self.rechargeMultiplier) + World_GetGameTime())
+	
+	if (rechargeTime <= World_GetGameTime()) or (params.initialUse) then
+		self.requirementData["RechargeTime"..tostring(params.id)] = nil
+		params.initialUse = false
+		return true
+	else
+		self.requirementData["RechargeTime"..tostring(params.id)] = rechargeTime
+		return false
+	end
+end
+
+
+-- Requirement: Chance
+-- params: percent = number(between 0 and 1.0)
+
+function Requirement.Chance(self, target, params)
+	local percent = params.percent or 0.5
+	local randomChance = (World_GetRand(1, 100)*0.01)
+	if (percent >= randomChance) then
+		return true
+	else
+		return false
+	end
+end
+
+
+-- Requirement: HealthLessThan
+-- params: percent = number(between 0 and 1.0), 
+
+function Requirement.HealthLessThan(self, target, params)
+	local percent = params.percent or 0.5
+	local health = SGroup_GetAvgHealth(self.sgroup)
+	
+	if (type(health) == "number") and (health < percent) then
+		return true
+	else
+		return false
+	end
+end
+
+-- Requirement: SimVariable
+-- params: simVariableName = string(string name of the Sim Variable), variable = number(required number for sim variable to be)
+
+function Requirement.SimVariable(self, target, params)
+	return self:GetSimVariable(familyManager.sim_variable[params.simVariableName]) == params.variable
+end
+
+-- Requirement: MinionHealthLessThan
+-- params: percent = number(between 0 and 1.0), minionName = string(name of the minion to look for)
+
+function Requirement.MinionHealthLessThan(self, target, params)
+	local percent = params.percent or 0.5
+	local minionName = params.minionName or "empty"
+	self.minionList = self.minionList or { }
+	local minion = self.minionList[minionName]
+	
+	if (minion) then
+		if (SGroup_CountSpawned(minion.sgroup) > 0) then
+			local health = SGroup_GetAvgHealth(minion.sgroup)
+			if (type(health) == "number") and (health < percent) then
+				return true
+			else
+				return false
+			end
+		else
+			return true
+		end
+	else
+		return true
+	end
+end

@@ -1,0 +1,536 @@
+local heroData = {
+	{
+		name = "Sorcerer",
+		sbp = "sbps\\core\\race_chaos\\survive\\chaos_sorcerer_hero",
+		wargear = {
+			{
+				wargearType = "accessories",
+				limit = 3,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\consume", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\doom_bolts", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\doppelganger_chaos_burst", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\doppelganger_chaotic_death", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\doppelganger_defying_death", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\energy_boost", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\orb_blood", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\orb_disruption", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\orb_retaliation", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\vamperic_trinket", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\weapon_enhancer_1", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\weapon_enhancer_2", },
+				},
+			},
+			{
+				wargearType = "commander accessories",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\chaos_fissures", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\doppelganger_enhanced", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\accessories\\survive\\power_of_chaos", },
+				},
+			},
+			{
+				wargearType = "armor",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\armor\\survive\\sorcerer_damage_boost", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\armor\\survive\\sorcerer_defying_death", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\armor\\survive\\sorcerer_energy_regeneration", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\armor\\survive\\sorcerer_fearless_unshakable", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\armor\\survive\\sorcerer_health_energy_boost", },
+				},
+			},
+			{
+				wargearType = "weapon",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\weapon_melee\\survive\\sorcerer_chainsword", 
+					pair = "offhandList", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\weapon_melee\\survive\\sorcerer_power_sword", 
+					pair = "offhandList", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\weapon_melee\\survive\\staff_fireball", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\weapon_melee\\survive\\staff_lava_line", },
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\weapon_melee\\survive\\staff_teleportation", },
+				},
+				offhandList = {
+					{ blueprint = "wargear\\wargear\\core\\race_chaos\\weapon_ranged\\survive\\bolt_pistol_sorcerer", },
+				},
+			},
+		},
+	},
+	{
+		name = "Farseer",
+		sbp = "sbps\\core\\race_eldar\\survive\\farseer_hero",
+		wargear = {
+			{
+				wargearType = "accessories",
+				limit = 3,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\cloaking_rune", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\confusion_rune", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\damage_boost", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\energy_regeneration", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\entangle_rune", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\evasion_boost", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\rune_of_delayed_impact", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\rune_of_fortune", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\rune_of_the_fleet", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\shield_rune", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\teleportation_rune", },
+				},
+			},
+			{
+				wargearType = "commander accessories",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\energy_regeneration_aura", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\eldrich_storm", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\accessories\\survive\\mass_confusion_rune", },
+				},
+			},
+			{
+				wargearType = "armor",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\armor\\survive\\farseer_armor_energy", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\armor\\survive\\farseer_armor_energy_buffer", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\armor\\survive\\farseer_armor_energy_regen", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\armor\\survive\\farseer_armor_solid", },
+				},
+			},
+			{
+				wargearType = "weapon",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\weapon_melee\\survive\\executioner_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\weapon_melee\\survive\\singing_spear_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\weapon_melee\\survive\\power_sword_hero", 
+					pair = "offhandList" },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\weapon_melee\\survive\\witchblade_of_energy", 
+					pair = "offhandList" },
+				},
+				offhandList = {
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\weapon_ranged\\survive\\destructor_force", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\weapon_ranged\\survive\\destructor_gravity", },
+					{ blueprint = "wargear\\wargear\\core\\race_eldar\\weapon_ranged\\survive\\shuriken_pistol_hero", },
+				},
+			},
+		},
+	},
+	{
+		name = "Space Marine Captain",
+		sbp = "sbps\\core\\race_marine\\survive\\tactical_marine_hero",
+		wargear = {
+			{
+				wargearType = "accessories",
+				limit = 3,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\charge_ability", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\frag_grenade_pack", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\health_boost", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\jump_pack", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\medical_kit", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\merciless_blows_ability", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\rite_of_glorious_battle", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\rite_of_health_regeneration", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\rite_of_intimidation", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\rite_of_the_boistress", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\rite_of_the_fallen", },
+				},
+			},
+			{
+				wargearType = "commander accessories",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\dreadnought_drop_pod", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\orbital_bombardment", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\accessories\\survive\\heal_aura", },
+				},
+			},
+			{
+				wargearType = "armor",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\armor\\survive\\power_balanced", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\armor\\survive\\power_health_regenerative", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\armor\\survive\\power_knockback_immune", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\armor\\survive\\power_reactive", },
+				},
+			},
+			{
+				wargearType = "weapon",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\weapon_ranged\\survive\\bolter_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\weapon_ranged\\survive\\plasma_gun_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\weapon_ranged\\survive\\plasma_cannon_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\weapon_melee\\survive\\chainsword_hero", 
+					pair = "offhandList", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\weapon_melee\\survive\\power_axe_hero", 
+					pair = "offhandList", },
+				},
+				offhandList = {
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\weapon_ranged\\survive\\bolt_pistol_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_marine\\weapon_ranged\\survive\\plasma_pistol_hero", },
+				},
+			},
+		},
+	},
+	{
+		name = "Mekboy",
+		sbp = "sbps\\core\\race_ork\\survive\\mekboy_hero",
+		wargear = {
+			{
+				wargearType = "accessories",
+				limit = 3,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\armor_bitz", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\debilitating_mines", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\energy_boost", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\energy_transfer", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\healin_bitz", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\huge_kaboom", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\polarity_shielder", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\proximity_mines", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\quake_machine", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\revenge_explosives", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\sturdy_bitz", },
+				},
+			},
+			{
+				wargearType = "commander accessories",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\boss_poll", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\rokks", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\accessories\\survive\\trophy_rack", },
+				},
+			},
+			{
+				wargearType = "armor",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\armor\\survive\\mekboy_electric", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\armor\\survive\\mekboy_force_field", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\armor\\survive\\mekboy_heavy", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\armor\\survive\\mekboy_teleport_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\armor\\survive\\mekboy_tricky_teleport", },
+				},
+			},
+			{
+				wargearType = "weapon",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\weapon_ranged\\survive\\big_shoota_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\weapon_ranged\\survive\\burna_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\weapon_ranged\\survive\\deffgun_dakka_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\weapon_ranged\\survive\\rokkit_launcha_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\weapon_melee\\survive\\choppa_n_basha", 
+					pair = "offhandList", },
+				},
+				offhandList = {
+					{ blueprint = "wargear\\wargear\\core\\race_ork\\weapon_ranged\\survive\\slugga_default", },
+				},
+			},
+		},
+	},
+	{
+		name = "Hive Tyrant",
+		sbp = "sbps\\core\\race_tyranid\\survive\\hive_tyrant_hero",
+		wargear = {
+			{
+				wargearType = "accessories",
+				limit = 3,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\damage_synapse", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\invulnerable_rage", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\poison_death_synapse", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\poison_synapse", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\psychic_scream", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\stun_smash", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\summon_genestealer", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\summon_ravener", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\summon_tyrant_guard", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\summon_warrior", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\warp_field_enhanced", },
+				},
+			},
+			{
+				wargearType = "commander accessories",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\charge", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\cheaper_abilities", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\accessories\\survive\\greater_synapse", },
+				},
+			},
+			{
+				wargearType = "armor",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\armor\\survive\\bio_plasma_carapace", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\armor\\survive\\hardening_carapace", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\armor\\survive\\maneuverable_carapace", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\armor\\survive\\resilient_carapace", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\armor\\survive\\virulent_carapace", },
+				},
+			},
+			{
+				wargearType = "weapon",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\weapon_melee\\survive\\talons_leadership", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\weapon_melee\\survive\\talons_of_life", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\weapon_melee\\survive\\talons_unshakable", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\survive\\venom_cannon_reinforcing", },
+					{ blueprint = "wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\survive\\venom_cannon_rending", },
+				},
+			},
+		},
+	},
+	{
+		name = "Commander",
+		sbp = "sbps\\core\\race_imperial_guard\\survive\\ig_commander_hero",
+		wargear = {
+			{
+				wargearType = "accessories",
+				limit = 3,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_add_commissar", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_add_sergeant", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_defensive", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_increase_damage", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_offensive", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_repair", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_shield", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_valk_bombing_run", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\acc_valk_reinforce", },
+				},
+			},
+			{
+				wargearType = "commander accessories",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\commander_item_retinue_catachan", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\commander_item_retinue_guardsmen", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\commander_item_retinue_ogryn", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\accessories\\survive\\commander_item_retinue_stormtrooper", },
+				},
+			},
+			{
+				wargearType = "armor",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\armor\\survive\\carapace_heavy_bolter_turret", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\armor\\survive\\carapace_missile_turret", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\armor\\survive\\carapace_multilaser_turret", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\armor\\survive\\carapace_battle_cannon_turret", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\armor\\survive\\carapace_executioner_turret", },
+				},
+			},
+			{
+				wargearType = "weapon",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\weapon_melee\\survive\\power_sword_defense", 
+					pair = "offhandList" },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\weapon_melee\\survive\\power_sword_melee", 
+					pair = "offhandList" },
+				},
+				offhandList = {
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\weapon_ranged\\survive\\bolter_lifesteal", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\weapon_ranged\\survive\\flamer_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\weapon_ranged\\survive\\grenade_launcher_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\weapon_ranged\\survive\\melta_gun_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\weapon_ranged\\survive\\plasma_gun_hero", },
+					{ blueprint = "wargear\\wargear\\core\\race_imperial_guard\\weapon_ranged\\survive\\sniper_rifle_hp_shot", },
+				},
+			},
+		},
+	},
+	{
+		name = "Tau Commander",
+		sbp = "sbps\\core\\race_tau\\survive\\commander_hero",
+		wargear = {
+			{
+				wargearType = "accessories",
+				limit = 3,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\advanced_drone_controller", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\coolant_injectors", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\energy_battery", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\energy_core", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\markerlight", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\missiles_antiarmor", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\missiles_fragmentation", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\nano_technology", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\photon_grenades", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\snare_mines", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\stimulant_injector", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\targeting_cluster", },
+				},
+			},
+			{
+				wargearType = "commander accessories",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\cmd_drone_gun", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\cmd_drone_marker", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\accessories\\survive\\cmd_drone_shield", },
+				},
+			},
+			{
+				wargearType = "armor",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\armor\\survive\\crisis_xv8_default", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\armor\\survive\\crisis_xv811_lite", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\armor\\survive\\crisis_xv813_agile", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\armor\\survive\\crisis_xv85_command", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\armor\\survive\\crisis_xv89_armored", },
+				},
+			},
+			{
+				wargearType = "weapon",
+				limit = 1,
+				list = {
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\shield_generator", 
+					pair = "offhandList" },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\shield_iridium_plated", 
+					pair = "offhandList" },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\shield_repulser", 
+					pair = "offhandList" },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\networked_weapon_interface", 
+					pair = "offhandList" },
+				},
+				offhandList = {
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\airbursting_frag", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\burst_cannon", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\flamer", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\fusion_blaster", },
+					{ blueprint = "wargear\\wargear\\core\\race_tau\\weapon_ranged\\survive\\plasma_rifle_x02", },
+				},
+			},
+		},
+	},
+	{
+    	name = "Necron Overlord",
+    	sbp = "sbps\\core\\race_necron\\survive\\necron_overlord_hero",
+    	wargear = {
+	      	{
+	        	wargearType = "accessories",
+	        	limit = 3,
+	        	list = {
+	          		{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_area_siphon_heal", },
+			        { blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_armour", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_energy", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_energy_regen", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_health_regen", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_mindshackle", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_move_speed", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_nanoscarabs", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_nightmare", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_phase_shifter", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_phylactory", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories\\survive\\nec_glyph_recharge_reduction", },
+        		},
+      		},
+      		{
+        		wargearType = "commander accessories",
+        		limit = 1,
+        		list = {
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories_cmd\\survive\\nec_cmd_default", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories_cmd\\survive\\nec_cmd_nightbringer", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories_cmd\\survive\\nec_cmd_resurrection", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\accessories_cmd\\survive\\nec_cmd_snare", },
+        		},
+      		},
+      		{
+        		wargearType = "armor",
+        		limit = 1,
+        		list = {
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\armor\\survive\\nec_crown_fire", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\armor\\survive\\nec_crown_reanimation", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\armor\\survive\\nec_crown_tachyon", },
+        		},
+      		},
+      		{
+        		wargearType = "weapon",
+        		limit = 1,
+        		list = {
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\weapon_melee\\survive\\nec_warscythe_double_head", 
+          			pair = "offhandList" },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\weapon_melee\\survive\\nec_warscythe_scythe", 
+          			pair = "offhandList" },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\weapon_melee\\survive\\nec_warscythe_standard", 
+          			pair = "offhandList" },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\weapon_melee\\survive\\overlord_warscythe_scythe", 
+          			pair = "offhandList" },
+        		},
+        		offhandList = {
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\weapon_ranged\\survive\\nec_staff_of_light_destroyer", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\weapon_ranged\\survive\\nec_staff_of_light_unique", },
+          			{ blueprint = "wargear\\wargear\\core\\race_necron\\weapon_ranged\\survive\\nec_staff_of_light_variation", },
+        		},
+      		},
+    	},
+	},	
+}
+
+function LastStand_GetRandomHeroData(player)
+	local hero = heroData[World_GetRand(1, #heroData)]
+	local randomHeroData = { }
+	
+	randomHeroData.wargear = { }
+	
+	for wargearTypeKey, wargearType in pairs(hero.wargear) do
+		for k, v in pairs(wargearType.list) do
+			local randomNumber = World_GetRand(1, #wargearType.list)
+			wargearType.list[k], wargearType.list[randomNumber] = wargearType.list[randomNumber], wargearType.list[k]
+		end
+		for i=1, wargearType.limit do
+			table.insert(randomHeroData.wargear, wargearType.list[i].blueprint)
+			if (type(wargearType.list[i].pair) == "string") then
+				local pair = wargearType[wargearType.list[i].pair][World_GetRand(1, #wargearType[wargearType.list[i].pair])]
+				table.insert(randomHeroData.wargear, pair.blueprint)
+			end
+		end
+	end
+	
+	randomHeroData.name = hero.name
+	randomHeroData.locName = Misc_GetPlayerNameLocalized(player)
+	randomHeroData.points = -1
+	randomHeroData.sbp = hero.sbp
+	
+	local GetFirstHumanGroup = function()
+		if (type(Survive.players) == "table") then
+			for k, v in pairs(Survive.players) do
+				if (Misc_IsHumanPlayer(v.player)) then
+					return v.group
+				end
+			end
+		end
+	end
+	
+	
+	randomHeroData.behaviorList = {
+		{
+			name="Protector", 
+			friend=GetFirstHumanGroup(), 
+			distance=35
+		},
+		{name="NonCombatAbilities", abilityBehavior="nonCombat"},
+		{name="CombatAbilities"},
+		{
+			name="ReviveUnconscious",
+			requirements = {
+				{ name = "RechargeTime", min = 3, max = 5 }, { name = "Chance", percent = 0.4 }
+			},
+		},
+	}
+	
+	print("Random hero "..hero.name.." generated")
+	
+	return randomHeroData
+end

@@ -1,0 +1,9 @@
+LOAD_DATA = "Survive//Data//LS2//Waves.scar"
+GATE_BLOCKER = World_GetPropertyBagGroupID("ebps\\world_objects\\gameplay\\move_blockers_gate_volcanic")
+Scar_AddInit(function()
+    Rule_AddOneShot(function()
+        import("Survive//Survive.scar")
+    end, 0)
+end)
+
+

@@ -1,0 +1,138 @@
+
+import("ScarUtil.scar")
+Util_LoadOnce("Util//table.scar")
+Util_LoadOnce("Util//print.scar")
+Util_LoadOnce("Data//TeamColours.scar")
+
+Survive = {}
+Survive.data = {}
+Survive.assets = {}
+Survive.assets.entities = {}
+
+-- Set Player Variables
+Survive.data.allyNPC = World_GetPlayerAt(4)
+Survive.data.enemyNPC = World_GetPlayerAt(5)
+Survive.data.jerkNPC = World_GetPlayerAt(6)
+Survive.data.secondAllyNPC = World_GetPlayerAt(7)
+Survive.data.thirdAllyNPC = World_GetPlayerAt(8)
+
+Survive.data.playerRelationshipTable = {
+	[Player_GetID(World_GetPlayerAt(1))] = Survive.data.allyNPC,
+	[Player_GetID(World_GetPlayerAt(2))] = Survive.data.secondAllyNPC,
+	[Player_GetID(World_GetPlayerAt(3))] = Survive.data.thirdAllyNPC,
+	[Player_GetID(Survive.data.allyNPC)] = Survive.data.allyNPC,
+	[Player_GetID(Survive.data.enemyNPC)] = Survive.data.enemyNPC,
+	[Player_GetID(Survive.data.jerkNPC)] = Survive.data.enemyNPC,
+	[Player_GetID(Survive.data.secondAllyNPC)] = Survive.data.secondAllyNPC,
+	[Player_GetID(Survive.data.thirdAllyNPC)] = Survive.data.thirdAllyNPC,
+}
+
+-- Load Event Handler
+Util_LoadOnce("Survive//EventHandler.scar")
+
+-- Load Base Classes
+Util_LoadOnce("Survive//Object.scar")
+Util_LoadOnce("Survive//ScoreBoard.scar")
+Util_LoadOnce("Survive//Unit.scar")
+Util_LoadOnce("Survive//Player.scar")
+Util_LoadOnce("Survive//Wave.scar")
+Util_LoadOnce("Survive//WaveManager.scar")
+
+-- Load Data
+if(LOAD_DATA)then
+	Util_LoadOnce(LOAD_DATA)
+else
+	Util_LoadOnce("Survive//Data//Waves.scar")
+end
+-- Load Special AE Functions
+Util_LoadOnce("Survive//AttributeEditorFunctions.scar")
+
+Survive.players = {}
+Survive.events = {}
+Survive.primaryObjectives = {}
+Survive.rooms = {}
+
+
+Survive.Initialize = function()
+    AI_EnableAll( false )
+	Survive.DisableRandomWargearDrops()
+    Survive.SetupPlayers()
+    Survive.StartPlayers()
+	WaveManager:CreateWaves(SurviveWaves)
+	ScoreBoard:New()
+	Rule_AddOneShot(function() Survive.EventHandler:SendEvent("MissionStart") end, 0)
+	Rule_AddInterval(Survive.Update, 1)
+end
+
+
+function Survive.SetupPlayers()
+    for i = 1, World_GetPlayerCount() do
+        local player = World_GetPlayerAt(i)
+        if(i <= 3)then
+            table.insert(Survive.players, Survive.Player:New(player))
+			Setup_SetPlayerTeam(player, 0) -- assign to human team
+		else
+			Setup_SetPlayerTeam(player, 1) -- assign to non-human (enemy) team
+        end
+    end
+	Setup_SetPlayerTeam(Survive.data.allyNPC, 0)
+	Setup_SetPlayerTeam(Survive.data.secondAllyNPC, 0)
+	Setup_SetPlayerTeam(Survive.data.thirdAllyNPC, 0)
+	Setup_SetPlayerTeam(Survive.data.jerkNPC, 10001)
+end
+
+function Survive.StartPlayers()
+    for k,v in pairs(Survive.players)do 
+        v.startPosition = Util_GetPosition(Marker_FromName("playerStart", ""))
+        v:Start()
+    end
+end
+
+function Survive.Update()
+	for k,v in pairs(Survive.players)do 
+		v:Update()
+	end
+end
+
+function Survive.DisableRandomWargearDrops()
+	for i=0, 5 do
+		World_DisableWargearDrops(i)
+	end
+end
+
+---- Util
+
+function Util_DeselectAll()
+    local temp = SGroup_Create("temp")
+    Misc_GetSelectedSquads(temp, true)
+    
+    for i = 1, SGroup_CountSpawned(temp) do
+        Misc_SelectSquad(SGroup_GetSpawnedSquadAt(temp, i), false)
+    end
+end
+
+function Util_DeletePVPGarbage()
+	for i=1, World_GetPlayerCount() do
+		local sgroup = SGroup_Create("PVPGarbage")
+		Player_GetAll(World_GetPlayerAt(i), sgroup)
+		SGroup_DestroyAllSquads(sgroup)
+		SGroup_Destroy(sgroup)
+	end
+end
+
+function Util_SurviveTestDefaultLoadouts()
+	for playerKey, player in pairs(Survive.players) do
+		for k, v in pairs(Survive.Player.heroes) do
+			if (player.hero.data.name ~= v.name) then
+				local hero = Survive.Unit:GetPlayerUnit(player.player, v)
+				hero:Spawn(player.startPosition)
+			end
+		end
+	end
+end
+
+Util_DeletePVPGarbage()
+
+Survive.Initialize()
+
+

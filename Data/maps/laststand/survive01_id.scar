@@ -1,0 +1,32 @@
+import("ScarUtil.scar")
+
+function OnInitID()
+
+	-- [[ Markers ]]
+	clone_spawn_01 = Marker_FromName("clone_spawn_01","misc")
+	clone_spawn_02 = Marker_FromName("clone_spawn_02","misc")
+	clone_spawn_03 = Marker_FromName("clone_spawn_03","misc")
+	entry1 = Marker_FromName("entry1","region rect")
+	entry1_close = Marker_FromName("entry1_close","region rect")
+	entry2 = Marker_FromName("entry2","region rect")
+	entry2_close = Marker_FromName("entry2_close","region rect")
+	entry3 = Marker_FromName("entry3","region rect")
+	entry3_close = Marker_FromName("entry3_close","region rect")
+	entry4 = Marker_FromName("entry4","region rect")
+	entry4_close = Marker_FromName("entry4_close","region rect")
+	mkr_camClamp = Marker_FromName("mkr_camClamp","misc trigger rectangle")
+	playerStart = Marker_FromName("playerStart","quest")
+	spawn_lord = Marker_FromName("spawn_lord","spawn enemy")
+
+	-- [[ Squad Groups ]]
+
+	-- [[ Entity Groups ]]
+	Gate1 = EGroup_CreateIfNotFound("Gate1")
+	Gate2 = EGroup_CreateIfNotFound("Gate2")
+	Gate3 = EGroup_CreateIfNotFound("Gate3")
+	Gate4 = EGroup_CreateIfNotFound("Gate4")
+	Point1 = EGroup_CreateIfNotFound("Point1")
+	Point2 = EGroup_CreateIfNotFound("Point2")
+	statue = EGroup_CreateIfNotFound("statue")
+
+end

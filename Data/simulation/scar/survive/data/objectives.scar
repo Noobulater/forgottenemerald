@@ -1,0 +1,186 @@
+Survive.data.objectives = {
+    {
+        objective = "Destroy",
+        weight = 3,
+        target = {
+            tag = "alpha",
+            spawn = true, -- Use existing chaff, or spawn in a single unit
+        },
+        validate = {
+            primary = true,
+            limit = 1,
+        },
+        activate = {
+            {
+                event = "MissionStart",
+            },
+        },
+    },    
+    {
+        objective = "Find",
+        id = "EscortTest2",
+        targetName = "Stranded Tech Marine",
+        validate = {
+            primary = true,
+            limit = 1,
+        },
+        room = {
+            doors = {
+                min = 1,
+                max = 15,
+            },
+--~             playersIn = {
+--~                 min = 0,
+--~                 max = 0,
+--~             },
+--~             spawners = {
+--~                 min = 2,
+--~                 max = 2,
+--~             },
+        },
+        activate = {
+            {
+                event = "MissionStart",
+            },
+        },
+        SubObjectives = {
+            {
+                objective = "Survive",
+                player = World_GetPlayerAt(6),
+                spawnList = {
+                    {
+                        name = "hormagant",
+                        weight = 7,
+                    },
+                    {
+                        name = "warrior",
+                        weight = 1,
+                        max = 1,
+                    },
+                    {
+                        tag = "ranged",  
+                        weight = 5,      
+                    },
+                    {
+                        tag = "melee",   
+                        weight = 2, 
+                    },
+                },
+                victory = {
+                    type = "timeLimit",
+                    type = "numberOfSpawns",
+                    value = 150,
+                },
+            },        
+        },
+    },
+    {
+        objective = "Destroy",
+        target = {
+            tag = "synapse",
+            spawn = true, -- Use existing chaff, or spawn in a single unit
+        },
+        validate = {
+            primary = false,
+            limit = 5,
+        },
+        activate = {
+            {
+                event = "MissionStart",
+            },
+        },
+    },
+    {
+        objective = "Destroy",
+        target = {
+            tag = {"chaff", "weak", "ranged", "melee"},
+            spawn = false, -- Use existing chaff, or spawn in a single unit
+            ratio = .6, -- if spawn = false, then this is the ratio of chaff of this type you need to kill
+            squadsize = 5,
+        },
+        validate = {
+            primary = false,
+            limit = 2,
+        },
+        activate = {
+            {
+                event = "MissionStart",
+            },
+        },
+    },
+    {
+        objective = "Explore",
+        count = -1,
+        validate = {
+            primary = false,
+            limit = 1,
+        },
+        activate = {
+            {
+                event = "ExploredRoom",
+                first = true,
+            },
+        },
+    },
+    {
+        objective = "Escort",
+        unitName = "Stranded Tech Marine",
+        requiredObjectives = {
+            {
+                objective = "Find",
+                id = "EscortTest",
+                targetName = "Stranded Tech Marine",
+                validate = {
+                    primary = false,
+                    limit = 1,
+                },
+                activate = {
+                    {
+                        event = "MissionStart",
+                    },
+                },
+            },
+        },
+        validate = {
+            primary = true,
+            limit = 1,
+        },
+        activate = {
+            {
+                event = "ObjectiveComplete",
+                id = "EscortTest",
+            },
+        },
+    },
+    {
+        objective = "Escort",
+        unitName = "Stranded Tech Marine",
+        requiredObjectives = {
+            {
+                objective = "Find",
+                id = "EscortTest2",
+                targetName = "Stranded Tech Marine",
+                validate = {
+                    primary = false,
+                    limit = 1,
+                },
+                activate = {
+                    {
+                        event = "Never",
+                    },
+                },
+            },
+        },
+        validate = {
+            primary = false,
+            limit = 1,
+        },
+        activate = {
+            {
+                event = "ObjectiveComplete",
+                id = "EscortTest2",
+            },
+        },
+    },
+
+} 

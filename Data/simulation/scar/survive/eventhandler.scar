@@ -1,0 +1,81 @@
+
+Survive.EventHandler = {
+    listeners = {
+        {
+            listener = nil,
+        },
+    },
+    entityDeadListeners = {
+    },
+}
+
+function Survive.EventHandler:AddListener(listener, events)
+    print("Adding listener: " .. tostring(listener) .. " of type " .. tostring(events))
+    table.insert(self.listeners, { listener = listener, event = events })
+end
+
+function Survive.EventHandler:SendEvent(event, sender)
+    -- discard events firing on setup (wierdness with spawning units triggering prox checks =\)
+    if(not Survive.start and event ~= "MissionStart")then
+        return 
+    else
+        Survive.start = true
+    end
+    print("EventHandler: Sending "..event .." from ".. tostring(sender))
+    for k, v in pairs(self.listeners)do 
+        if(v.event == event or v.event == ANY)then
+            --print("Sending Event: " .. event .. " to ".. tostring(v.listener))
+            v.listener:Event(event, sender)
+        end
+    end
+end
+
+function Survive.EventHandler:AddEntityKilledListener(func, tbl)
+    -- insert data into table to run
+    local t = {}
+    for k,v in pairs(tbl)do 
+        t[k] = v
+    end
+    
+    t.func = func
+    
+    table.insert(self.entityDeadListeners, t)
+    
+    local f = function(entity, killer)
+        local t = {}
+        for k,v in pairs(self.entityDeadListeners) do 
+            if(v.sgroup and SGroup_GetAvgHealth(v.sgroup) <= 0.001)then
+                v.func(entity, killer)
+                table.insert(t, k)
+            end            
+            
+            local squad = Entity_GetSquad(entity)
+            if(v.blueprint and squad and Squad_GetBlueprintID(squad) == v.blueprint)then
+                if(not v.func(entity, killer))then
+                    table.insert(t,k)
+                end                
+            end
+			
+			if(v.entity and Util_GetGameID(v.entity) == Util_GetGameID(entity))then 
+				if(not v.func(entity, killer))then
+					table.insert(t,k)
+				end
+			end
+        end
+        
+        for k,v in pairs(t)do 
+            table.remove(self.entityDeadListeners, v)
+        end
+        
+        if(#self.entityDeadListeners == 0)then
+            Rule_RemoveMe()
+            self.Rule = false
+        end
+    end
+    
+    -- add rule if its not already there.
+    if(not self.Rule)then
+        Rule_AddEvent(f, GE_EntityKilled)
+        self.Rule = true
+    end
+end

@@ -1,0 +1,115 @@
+Survive.data.encounterList = {
+    {
+		tags = {
+			"standard",
+		},
+        units = {
+			"termagant",
+			"termagant",
+			"termagant",
+		},
+		behaviorList = {
+			{ name = "PatrolRooms" },
+		},
+    },
+    {
+		tags = {
+			"standard",
+		},
+        units = {
+			"termagant",
+			"hormagant",
+			"termagant",
+		},
+		unitTags = {
+			"chaff",
+		},
+		behaviorList = {
+			{ name = "Wander", distance = 5 },
+			{ name = "Retaliation" },
+		},
+    },
+    {
+		tags = {
+			"standard",
+		},
+        unitTags = {
+			"chaff",
+			"chaff",
+		},
+		behaviorList = {
+			{ name = "Wander", distance = 15 },
+			{ name = "Retaliation" },
+		},
+    },
+    {
+		tags = {
+			"standard",
+		},
+        unitTags = {
+			"ranged",
+			"chaff",
+		},
+		tags = {
+			"defender",
+		},
+    },
+    {
+		tags = {
+			"standard",
+		},
+        unitTags = {
+			"ranged",
+			"melee",
+		},
+		tags = {
+			"defender",
+		},
+    },
+    {
+		tags = {
+			"standard",
+		},
+        unitTags = {
+			"chaff",
+			"melee",
+		},
+		behaviorList = {
+			{ name = "PatrolRooms" },
+		},
+    },
+    {
+		name = "MovingTrash",
+		tags = {
+			"trash",
+		},
+        unitTags = {
+			"trash",
+			"trash",
+			"trash",
+		},
+    },
+    {
+		name = "SmallerMovingTrash",
+		tags = {
+			"trash",
+		},
+        unitTags = {
+			"trash",
+		},
+    },
+}
+
+Survive.data.encounterName = { }
+Survive.data.encounterTag = { }
+for k, v in pairs(Survive.data.encounterList) do
+	if (type(v.name) == "string") then
+		Survive.data.encounterName[v.name] = v
+	end
+	if (type(v.tags) == "table") then
+		for tagKey, tag in pairs(v.tags) do
+			Survive.data.encounterTag[tag] = Survive.data.encounterTag[tag] or { }
+			table.insert(Survive.data.encounterTag[tag], v)
+		end
+	end
+end

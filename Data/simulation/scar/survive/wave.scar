@@ -1,0 +1,219 @@
+
+Util_LoadOnce("Survive//Gate.scar")
+
+TestGate = Gate:New(EGroup_FromName("Gate1"))
+local entries = {
+		{ marker = Marker_FromName("entry1", ""), close = Marker_FromName("entry1_close", ""), gate = TestGate },
+		{ marker = Marker_FromName("entry2", ""), close = Marker_FromName("entry2_close", ""),  gate = Gate:New(EGroup_FromName("Gate2")) },
+		{ marker = Marker_FromName("entry3", ""), close = Marker_FromName("entry3_close", ""),  gate = Gate:New(EGroup_FromName("Gate3")) },
+		{ marker = Marker_FromName("entry4", ""), close = Marker_FromName("entry4_close", ""),  gate = Gate:New(EGroup_FromName("Gate4")) },
+	}
+	
+Wave = {
+	state = "initialized",
+} 
+
+-- statics so that we can save the text references
+function Wave_SetActText(text)
+	local pos = { x = 0.05, y = 0.325 }
+	--PrintOnScreen(text, "Wave_ActText", 0, pos)
+end
+
+function Wave_SetWaveText(text)
+	local pos = { x = 0.05, y = 0.35 }
+	--PrintOnScreen(text, "Wave_WaveText", 0, pos)
+end
+
+function Wave:New(data)
+	local new = Clone(self)
+	new.data = data
+	new.id = data.id
+	new.player = Survive.data.enemyNPC
+	new.entries = entries
+	new:RandomizeMarkerOrder()
+	return new
+end
+
+function Wave:RandomizeMarkerOrder()
+	for i = 1, #self.entries do 
+		local newPos = World_GetRand(1, #self.entries)
+		local m1 = self.entries[i]
+		local m2 = self.entries[newPos]
+		self.entries[newPos] = m1
+		self.entries[i] = m2
+	end
+end
+
+function Wave:IsDead()
+	return self.state == "dead"
+end
+
+function Wave:IsStarted()
+	return self.state == "started"
+end
+
+function Wave:Start()
+	self.units = self.units or {}
+	self.data.delay = self.data.delay or 0
+	
+	if(self.data.actions)then
+		ActionManager.PlayActions(self.data.actions)
+	end
+	
+	--Wave_SetActText(self.data.bandName)
+	--Wave_SetWaveText(self.data.name)
+	Rule_AddOneShot(function()
+		LastStand_AnnounceWave(self.data.waveNumber , self.data.bandName, self.data.name, self.data.wavePortrait)
+	end, self.data.announceDelay or 0)
+
+  -- Set the current wave number simvar on all Players.
+  for i = 1, World_GetPlayerCount() do
+    local player = World_GetPlayerAt(i)
+    Player_SetSimVariable(player, familyManager.sim_variable.last_stand_current_wave, self.data.waveNumber)
+  end
+  
+	if(self.data.spawnList)then
+		for k,v in pairs(self.data.spawnList) do 
+			local count = v.count or 1
+			local location = v.location or 1
+			local teamColour = v.teamColour or self.data.teamColour
+			
+			v.timeOffset = v.timeOffset or 0
+			for i=1, count do
+				local unit
+				if(type(v.Spawn) == "function")then
+					unit = v
+				else
+					unit = Survive.Unit:GetFromName(self.player, v.name)
+				end
+				table.insert(self.units, unit)
+				
+				local f = function()
+					local unit = unit
+					self.state = "started"
+					
+					unit.data.spawnPosition = Util_GetPosition(self.entries[location].marker)
+					unit.data.spawnGate = self.entries[location].gate
+					unit:SetTeamColour(teamColour)
+					unit:Spawn(unit.data.spawnPosition, v.behaviors)
+					unit:AddDeathActions(v.DeathActions)
+					self.entries[location].gate:Open()
+					
+					if(v.candy)then
+						Candy:New(unit, v.candy)
+					end
+--~ 					UI_CreateMinimapPing(unit.data.spawnPosition, PT_Defend, 5)
+				end
+				Rule_AddOneShot(f, v.timeOffset + self.data.delay)
+			end
+		end
+		Rule_AddInterval(function() self:Update() end, 1)
+	else
+		self.state = "dead"
+	end
+	
+	
+	if(self.data.music)then
+		local combatValue = self.data.music.combatValue or 3
+		Sound_SetAndLockMusicCombatValue(combatValue)
+		if(self.data.music.boss)then
+			print("Playing Boss Music: " .. self.data.music.boss)
+			Sound_PlayMusic(self.data.music.boss, 1, 0)
+			if(self.data.music.path)then
+				print("QUEUING MUSIC: " .. self.data.music.path)
+				Sound_QueueMusic(self.data.music.path, 1, 1)
+			end
+		elseif(self.data.music.path)then
+			print("PLAYING MUSIC: " .. self.data.music.path)
+			Sound_PlayMusic(self.data.music.path, 1, 0)
+		end
+	end
+end
+
+function Wave:AllSpawned()
+	for k,v in pairs(self.units)do 
+		if(not v:HasSpawned())then
+			return false
+		end
+	end
+	
+	return true
+end
+
+function Wave:TotalPoints()
+	local p = 0
+	for k,v in pairs(self.units)do 
+		p = p + v:GetPoints()
+	end
+	
+	return p
+end
+
+function Wave:PointsAlive()
+	local p = 0
+	for k,v in pairs(self.units)do 
+		p = p + v:GetPointsLeft()
+	end
+	
+	return p
+end
+
+function Wave:Update()
+	if(self.state == "started")then
+
+		local eg = EGroup_Create("")
+		for k,v in pairs(self.entries) do 
+			local unitsIn = false
+			local close = true
+			for i = 1, World_GetPlayerCount() do
+				local player = World_GetPlayerAt(i)
+				EGroup_Clear(eg)
+
+                if(Player_AreSquadsNearMarker(player, v.close))then
+                    close = false
+                else
+                    Player_GetAllEntitiesNearMarker(player, eg, v.close)
+                    if(EGroup_Count(eg) > 0)then
+                        close = false
+                    end
+				end
+				
+				if(Player_AreSquadsNearMarker(player, v.marker))then
+					unitsIn = true
+				end
+			end
+			
+			if(v.gate:IsOpen() and unitsIn == false and close == true)then		
+				v.gate:Close()
+			elseif(not v.gate:IsOpen() and unitsIn == true) then
+				v.gate:Open()
+			end
+		end
+        EGroup_Destroy(eg)
+		
+        local dead = true
+        
+		for k,v in pairs(self.units) do 				
+			-- check if the waves are dead
+			if((v:HasSpawned() ~= true) or (v:IsDead() == false and v:IsKO() == false))then
+				dead = false
+				break
+			end
+		end
+		
+		if(dead == true)then
+			self.state = "dead"
+			if (self.data.endActions) then
+				self.endDelay = ActionManager.PlayActions(self.data.endActions)
+			end
+			Rule_RemoveMe()
+		end
+	end
+end
+
+function Wave:RegisterUnit(unit)
+	table.insert(self.units, unit)
+end
+
+
+

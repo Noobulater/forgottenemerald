@@ -1,0 +1,2223 @@
+local health = LEVELING_ATTRIB_POINTS_Health
+local energy = LEVELING_ATTRIB_POINTS_Energy
+local melee = LEVELING_ATTRIB_POINTS_Melee
+local ranged = LEVELING_ATTRIB_POINTS_Ranged
+
+Survive.data.unitList = {
+
+tau = {
+		{
+			name = "Shield Drone",
+			locName = 9160945,
+			points = -1,
+			loadout = 1,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 1 },
+			},
+			tags = {
+				"ranged",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tau\\shield_drone"),
+			wargear = {
+			},
+		},
+		{
+			name = "Heavy Gun Drone",
+			locName = 9160973,
+			points = -1,
+			loadout = 1,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 1 },
+			},
+			tags = {
+				"ranged",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tau\\gun_drone"),
+			wargear = {
+			},
+		},
+		{
+			name = "Marker Drone",
+			locName = 9160964,
+			points = -1,
+			loadout = 1,
+			abilities = {},
+			behaviorList = {
+				{ name = "RandomCombatTargets", },
+			},
+			attributes = {
+				{ type = ranged, level = 1 },
+			},
+			tags = {
+				"ranged",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tau\\marker_drone"),
+			wargear = {
+			},
+		},
+	},
+	imperial_guard = {
+		{
+			name = "guardsmen",
+			locName = 9160031,
+			points = 5,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 1 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_guardsmen_squad"),
+			wargear = {
+				"wargear\\wargear\\core\\race_imperial_guard\\weapon_ranged\\lasgun",
+				"wargear\\wargear\\core\\race_imperial_guard\\armor\\flak_common",
+			},
+		},		
+		{
+			name = "ogryn",
+			locName = 9142728,
+			points = 15,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 1 },
+				{ type = health, level = 7 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_ogryn_squad"),
+			wargear = {
+			},
+		},	
+		{
+			name = "baneblade",
+			locName = 9134992,
+			points = 150,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 3 },
+				{ type = health, level = 7 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\ig_baneblade"),
+			wargear = {
+			},
+		},	
+		{
+			name = "stormtrooper",
+			locName = 9156219,
+			points = 10,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 1 },
+				{ type = health, level = 5 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_stormtrooper_squad"),
+			wargear = {
+			},
+		},
+		{
+			name = "HeavyWeapons",
+			locName = 9122806,
+			points = 50,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 5 },
+				{ type = health, level = 1 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\heavy_weapon_squad"),
+			wargear = {
+			},
+		},
+		{
+			name = "Chimera",
+			locName = 9134997,
+			points = 50,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 2 },
+				{ type = health, level = 8 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_chimera"),
+			wargear = {
+			},
+		},
+		{
+			name = "Leman Russ",
+			locName = 9134999,
+			points = 100,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 3 },
+				{ type = health, level = 8 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\leman_russ"),
+			wargear = {
+			},
+		},
+		{
+			name = "sentinel",
+			locName = 9135006,
+			points = 25,
+			abilities = {},
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 1 },
+				{ type = health, level = 10 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_sentinel"),
+			wargear = {
+			},
+		},
+		{
+			name = "Catachan",
+			locName = 9150996,
+			points = 25,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 25 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\frag_grenade"),
+					name = "Frag Grenade",
+					waitTime = 6,
+					requirements = {
+						{ name = "RechargeTime", min = 2, max = 6, id = "awesomesauce", },
+						{ name = "Chance", percent = 0.80 },
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+			},
+			loadout = 4,
+			tags = {
+				"ranged",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_catachan_squad"),
+			attributes = {
+				{ type = melee, level = 3 },
+				{ type = ranged, level = 3 },
+				{ type = health, level = 3 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\accessories\\frag_grenade_pack",
+			},
+		},
+		{
+			name = "Catachan Protector",
+			locName = 9150996,
+			points = -1,
+			behaviorList = {
+				{ name = "CombatAbilities", },
+			},
+			loadout = 4,
+			tags = {
+				"ranged",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_catachan_squad"),
+			attributes = {
+				{ type = melee, level = 5 },
+				{ type = ranged, level = 5 },
+				{ type = health, level = 5 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\accessories\\frag_grenade_pack",
+			},
+		},
+		{
+			name = "Commissar Protector",
+			locName = 9134408,
+			points = -1,
+			loadout = 1,
+			tags = {
+				"melee",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_commissar"),
+			attributes = {
+				{ type = melee, level = 5 },
+				{ type = health, level = 5 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_imperial_guard\\armor\\protector_commissar",
+			},
+		},
+		{
+			name = "Guardsmen Protector",
+			locName = 9120326,
+			points = -1,
+			behaviorList = {},
+			attributes = {
+				{ type = ranged, level = 1 },
+			},
+			tags = {
+				"ranged",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_guardsmen_squad"),
+			wargear = {
+				"wargear\\wargear\\core\\race_imperial_guard\\armor\\protector_guardsmen",
+			},
+		},
+		{
+			name = "Ogryn Protector",
+			locName = 9142728,
+			points = -1,
+			loadout = 3,
+			tags = {
+				"melee",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_ogryn_squad"),
+			attributes = {
+				{ type = melee, level = 1 },
+				{ type = health, level = 8 },
+			},
+			wargear = {
+			},
+		},
+		{
+			name = "Sergeant Protector",
+			locName = 9134567,
+			points = -1,
+			loadout = 1,
+			tags = {
+				"melee",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_sergeant"),
+			attributes = {
+				{ type = melee, level = 5 },
+				{ type = health, level = 5 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_imperial_guard\\armor\\protector_sergeant",
+			},
+		},
+		{
+			name = "Stormtrooper Protector",
+			locName = 9156219,
+			points = -1,
+			abilities = {
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\infiltration"),
+					name = "Infiltration",
+					abilityBehavior = "toggle",
+					toggleOn = "moving",
+				},
+			},
+			loadout = 4,
+			tags = {
+				"ranged",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_stormtrooper_squad"),
+			attributes = {
+				{ type = ranged, level = 1 },
+				{ type = health, level = 5 },
+			},
+			wargear = {
+			},
+		},
+		{
+			name = "Vox Protector",
+			locName = 9134565,
+			points = -1,
+			loadout = 1,
+			tags = {
+				"ranged",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_vox_caster"),
+			attributes = {
+				{ type = ranged, level = 3 },
+				{ type = health, level = 3 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_imperial_guard\\armor\\protector_vox_caster",
+			},
+		},
+		
+		{
+			name = "Mixed Squad Protector",
+			locName = 9134983,
+			points = -1,
+			loadout = 2,
+			tags = {
+				"ranged",
+				"chaff",
+				"protector",
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_imperial_guard\\survive\\ig_mixed_squad"),
+			attributes = {
+				{ type = ranged, level = 3 },
+				{ type = health, level = 3 },
+			},
+			wargear = {
+			},
+		},
+		
+		
+		
+	},
+	space_marines = {
+		{
+			name = "scout",
+			locName = 9120327,
+			points = 25,
+			abilities = {
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\infiltration"),
+					name = "Infiltration",
+					abilityBehavior = "toggle",
+					toggleOn = "moving",
+				},
+				{
+					target = { name = "FindEnemy", distance = 35 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\frag_grenade"),
+					name = "Frag Grenade",
+					waitTime = 6,
+					requirements = {
+						{ name = "RechargeTime", min = 2, max = 6, id = "awesomesauce", },
+						{ name = "Chance", percent = 0.80 },
+					},
+				},
+			},
+			attributes = {
+				{ type = ranged, level = 4 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\scout_marines"),
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\weapon_ranged\\bolter",
+				"wargear\\wargear\\core\\race_marine\\accessories\\frag_grenade_pack",
+				"wargear\\wargear\\core\\race_marine\\accessories\\infiltration_ability",
+			},
+		},
+		{
+			name = "space marine",
+			locName = 9120328,
+			points = 60,
+			abilities = {},
+			attributes = {
+				{ type = health, level = 2 },
+				{ type = ranged, level = 3 },
+				{ type = melee, level = 2 },
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\tactical_marines"),
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\weapon_ranged\\plasma_gun",			
+			},
+		},
+		{
+			name = "landraider",
+			locName = 9138803,
+			points = 200,
+			abilities = {},
+			attributes = {
+				{ type = health, level = 8 },
+				{ type = ranged, level = 3 },
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\sm_landraider"),
+			wargear = {		
+			},
+		},
+		{
+			name = "assault marine",
+			locName = 9002780,
+			points = 60,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 75 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\jump"),
+					name = "Space Marine Jump",
+					requirements = {
+						{ name = "RechargeTime", min = 10, max = 45, initialUse = true }
+					},
+				},			
+			},
+			attributes = {
+				{ type = health, level = 4 },
+				{ type = melee, level = 2 },
+			},
+			behaviorList = { { name = "CombatAbilities", }, },
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\tactical_marines"),
+				wargear = {
+					"wargear\\wargear\\core\\race_marine\\accessories\\survive\\jump_pack",
+					"wargear\\wargear\\core\\race_marine\\weapon_ranged\\bolt_pistol",
+					"wargear\\wargear\\core\\race_marine\\weapon_melee\\chainsword",
+				},
+		},
+		{
+			name = "marine bolter",
+			locName = 9120328,
+			points = 60,
+			abilities = {		
+			},
+			attributes = {
+				{ type = health, level = 5 },
+				{ type = ranged, level = 1 },
+				{ type = melee, level = 2 },
+			},
+			behaviorList = {			
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\tactical_marines"),
+				wargear = {
+					"wargear\\wargear\\core\\race_marine\\weapon_ranged\\bolter",
+				},
+		},
+		{
+			name = "devestator",
+			locName = 9098910,
+			points = 60,
+			abilities = {		
+			},
+			attributes = {
+				{ type = health, level = 5 },
+				{ type = ranged, level = 1 },
+				{ type = melee, level = 2 },
+			},
+			behaviorList = {			
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\tactical_marines"),
+				wargear = {
+					"wargear\\wargear\\core\\race_marine\\weapon_ranged\\heavy_bolter",
+				},
+		},
+		{
+			name = "rhino",
+			locName = 9129685,
+			points = 60,
+			abilities = {},
+			attributes = {
+				{ type = health, level = 2 },
+				{ type = ranged, level = 3 },
+				{ type = melee, level = 2 },
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = sbps_core_rhino,
+			wargear = {	
+			},
+		},
+		{
+			name = "Terminator",
+			locName = 9023645,
+			points = 100,
+			abilities = {},
+			attributes = {
+				{ type = health, level = 10 },
+				{ type = ranged, level = 5 },
+				{ type = melee, level = 5 },
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = sbps_core_terminator,
+			wargear = {	
+			},
+		},
+		{
+			name = "Predator",
+			locName = 9023500,
+			points = 150,
+			abilities = {},
+			attributes = {
+				{ type = health, level = 8 },
+				{ type = ranged, level = 5 },
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = sbps_core_predator,
+			wargear = {	
+			},
+		},
+		{
+			name = "Dreadnought",
+			locName = 9120329,
+			points = 400,
+			abilities = {
+				{
+					name = "Emperors Fist",
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\emperors_fist_dreadnought"),
+					requirements = {
+						{ name = "RechargeTime", min = 3, max = 6, },
+						{ name = "Chance", percent = 0.33 },
+					},
+				},
+			},
+			attributes = {
+				{ type=health, level=6 },
+				{ type=melee, level=6 },
+			},
+			behaviorList = {
+				{ 
+					name = "CombatAbilities",
+					requirements = {
+						{ name = "IsNearEnemy", distance = 9 },
+					},
+				},
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\accessories\\emperors_fist_dreadnought_ability",
+			},
+			tags = { "NPC" },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\dreadnought"),
+		},
+		{
+			name = "Dreadnought Assault Cannon",
+			locName = 9120329,
+			points = 400,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 50 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\dreadnought\\damage_aoe_cannonbarrage"),
+					name = "Assault Cannon Barrage",
+					waitTime = 6,
+					requirements = {
+						{ name = "RechargeTime", min = 3, max = 6, },
+						{ name = "Chance", percent = 0.33 },
+					},
+				},
+			},
+			attributes = {
+				{ type=health, level=4 },
+				{ type=ranged, level=4 },
+			},
+			behaviorList = {
+				{ name = "CombatAbilities" },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\weapon_ranged\\dread_assault_cannon",
+			},
+			tags = { "NPC" },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\dreadnought"),
+		},
+		{
+			name = "Dreadnought Protector",
+			locName = 9120329,
+			points = -1,
+			abilities = {
+				{
+					name = "Emperors Fist",
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\emperors_fist_dreadnought"),
+					requirements = {
+						{ name = "RechargeTime", min = 3, max = 6, },
+						{ name = "Chance", percent = 0.33 },
+					},
+				},
+			},
+			attributes = {
+				{ type=health, level=4 },
+				{ type=melee, level=3 },
+			},
+			behaviorList = {
+				{ 
+					name = "CombatAbilities",
+					requirements = {
+						{ name = "IsNearEnemy", distance = 9 },
+					},
+				},
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\accessories\\emperors_fist_dreadnought_ability",
+			},
+			tags = { "PlayerAlly", "NPC" },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\survive\\dreadnought_protector"),
+		},
+		{
+			name = "force commander",
+			locName = 9120330,
+			points = 120,
+			abilities = {
+				{
+					name = "Merciless Strikes",
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\merciless_blows"),
+					target = { name = "FindEnemy", distance = 5 },
+					requirements = {
+						{ name = "RechargeTime", min = 4, max = 8 },
+						{ name = "Chance", percent = 0.80 },
+					},
+				},
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\survive\\force_commander_boss"),
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\accessories\\survive\\merciless_blows_ability",
+				"wargear\\wargear\\core\\race_marine\\armor\\power_epic",
+				"wargear\\wargear\\core\\race_marine\\weapon_melee\\twohanded_hammer",
+			},
+			attributes = {
+				{ type = health, level = 4 },
+				{ type = melee, level = 3 },
+			},
+		},
+		{
+			name = "gabriel",
+			locName = 9032438,
+			points = 500,
+			abilities = {
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\survive\\gabriel"),
+			wargear = {
+			},
+			attributes = {
+				{ type = health, level = 15 },
+				{ type = melee, level = 7 },
+			},
+		},
+		{
+			name = "apothecary",
+			locName = 9120331,
+			points = 100,
+			abilities = {
+				{
+					target = { name = "FindAlly", which="MostDamaged", distance = 30 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\heal"),
+					name = "Heal",
+					requirements = {
+						{ name = "RechargeTime", min = 2, max = 5, initialUse = false },
+					},
+				},
+			},
+			behaviorList = {
+				{ name="CombatAbilities" }, 
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\survive\\apothecary_boss"),
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\weapon_ranged\\bolter",
+				"wargear\\wargear\\core\\race_marine\\accessories\\heal_ability",
+			},
+			attributes = {
+				{ type = health, level = 2 },
+				{ type = energy, level = 1 },
+			},
+		},
+		{
+			name = "Terminator Hero",
+			locName = 9120332,
+			points = 300,
+			abilities = {
+				{
+					name = "Cyclone Missile Barrage",
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\terminator\\damage_aoe_missilebarrage"),
+					target = { name = "FindEnemy", distance = 80, minimum = 10 },
+					requirements = {
+						{ name = "RechargeTime", min = 8, max = 16 },
+						{ name = "Chance", percent = 0.80 },
+					},
+					waitTime = 4,
+				},
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\emperors_fist"),
+					name = "Emperors Fist",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 6, },
+						{ name = "Chance", percent = 0.80 },
+						{ name = "IsNearEnemy", distance = 6 },
+					},
+					waitTime = 3,
+				},
+				{
+					target = { name = "SelfRandomOffset", distance = 50, minimum = 15 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_marine\\terminator\\teleport_target_terminators"),
+					name = "Terminator Teleport",
+					requirements = {
+						{ name = "RechargeTime", min = 2, max = 20, },
+						{ name = "IsNearEnemy", distance = 4 },
+					},
+				},
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_marine\\survive\\terminator_hero"),
+			wargear = {
+				"wargear\\wargear\\core\\race_marine\\accessories\\missile_launcher_terminator",
+				"wargear\\wargear\\core\\race_marine\\armor\\terminator_armor_of_azariah",
+				"wargear\\wargear\\core\\race_marine\\accessories\\emperors_fist_ability",
+				"wargear\\wargear\\core\\race_marine\\accessories\\teleport_terminator_ability",
+			},
+			attributes = {
+				{ type = health, level = 4 },
+				{ type = melee, level = 2 },
+				{ type = ranged, level = 6 },
+				{ type = energy, level = 10 },
+			},
+		},
+	},
+	eldar = {
+		{
+			name = "guardian",
+			locName = 9120333,
+			points = 5,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 25 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_eldar\\plasma_grenade"),
+					name = "Plasma Grenade",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 8 },
+						{ name = "Chance", percent = 0.20 },
+					},
+				},
+			},
+			attributes = {
+				{ type = ranged, level = 2 },
+			},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\guardian"),
+			wargear = {"wargear\\wargear\\core\\race_eldar\\accessories\\plasma_grenades"},
+		},
+		{
+			name = "banshee",
+			locName = 9120334,
+			points = 8,
+			behaviorList = {{name="MeleeCombat"}},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\banshee"),
+			wargear = {},
+			attributes = {
+				{ type = melee, level = 3 },
+			},
+		},
+		{
+			name = "seer council",
+			locName = 9120334,
+			points = 8,
+			behaviorList = {{name="MeleeCombat"}},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\seer_council"),
+			wargear = {},
+			attributes = {
+				{ type = melee, level = 6 },
+				{ type = health, level = 10 },
+			},
+		},
+		{
+			name = "wraithguard",
+			locName = 9111925,
+			points = 75,
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\eld_wraithguard"),
+			wargear = {},
+			attributes = {
+				{ type = health, level = 5 },
+				{ type = ranged, level = 6 },
+			},
+		},
+		{
+			name = "shuriken cannon",
+			locName = 9120335,
+			points = 20,
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\grav_platform_shuriken_cannon"),
+			wargear = {},
+			attributes = {
+				{ type = health, level = 2 },
+			},
+		},
+		{
+			name = "warp spider",
+			locName = 9120336,
+			abilities = {
+				{
+					target = { name = "FindEnemyOffset", distance = 30, offset = 20 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_eldar\\teleport"),
+					name = "Warp Spider Teleport",
+					requirements = {
+						{ name = "RechargeTime", min = 1, max = 10, },
+						{ name = "HealthLessThan", percent = 0.7 },
+					},
+				},
+				{
+					target = { name = "FindEnemyOffset", distance = 50, offset = 20 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_eldar\\teleport"),
+					name = "Warp Spider Teleport Non-combat",
+					requirements = {
+						{ name = "RechargeTime", min = 1, max = 20, }
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+				{ name = "NonCombatAbilities", abilityBehavior = "nonCombat" },
+			},
+			attributes = {
+				{ type = ranged, level = 4 },
+			},
+			points = 15,
+			loadout = 5,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\warp_spider"),
+			wargear = { "wargear\\wargear\\core\\race_eldar\\accessories\\teleport_jump"},
+		},
+		{
+			name = "wraithlord",
+			locName = 9120337,
+			abilities = {},
+			points = 200,
+			loadout = 5,
+			attributes = {
+				{ type = melee, level = 8 },
+				{ type = health, level = 2 },
+				{ type = ranged, level = 6 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\survive\\wraithlord_boss"),
+			wargear = {},
+		},	
+		{
+			name = "fireprism",
+			locName = 9023991,
+			abilities = {},
+			points = 200,
+			loadout = 5,
+			attributes = {
+				{ type = health, level = 2 },
+				{ type = ranged, level = 6 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\fire_prism"),
+			wargear = {},
+		},			
+		{
+			name = "falcon",
+			locName = 9059462,
+			abilities = {},
+			points = 200,
+			loadout = 5,
+			attributes = {
+				{ type = melee, level = 8 },
+				{ type = health, level = 2 },
+				{ type = ranged, level = 6 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\falcon"),
+			wargear = {},
+		},
+		{
+			name = "avatar",
+			locName = 9049105,
+			abilities = {},
+			points = 200,
+			loadout = 5,
+			attributes = {
+				{ type = melee, level = 8 },
+				{ type = health, level = 12 },
+				{ type = ranged, level = 6 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_eldar\\avatar"),
+			wargear = {},
+		},
+	},
+	orks = {
+		{
+			-- WTF Identity crisis?
+			name = "slugga",
+			locName = 9120339,
+			points = 1,
+			abilities = {},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_tyranid\\ripper"),
+			wargear = {},
+		},
+		{
+			name = "shoota",
+			locName = 9120340,
+			points = 5,
+			abilities = {},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\boy"),
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\armor\\slugga_boy_common",
+				"wargear\\wargear\\core\\race_ork\\weapon_ranged\\shoota",
+			},
+		},
+		{
+			name = "wartrukk",
+			locName = 9024256,
+			points = 75,
+			abilities = {},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = sbps_core_wartrukk,
+			wargear = {
+			},
+		},
+		{
+			name = "nob",
+			locName = 9120341,
+			points = 20,
+			loadout = 2,
+			abilities = {},
+			behaviorList = {{name="MeleeCombat"}},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\nob"),
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\weapon_melee\\choppa_nob",
+				"wargear\\wargear\\core\\race_ork\\weapon_ranged\\slugga_nob",
+			},
+		},
+		{
+			name = "rokkit launcha",
+			locName = 9120342,
+			points = 45,
+			loadout = 3,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 80, minimum = 10 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_ork\\rokkit_launcha_barrage"),
+					name = "Rokkit Barrage",
+					requirements = {
+						{ name = "RechargeTime", min = 10, max = 25 }
+					},
+					waitTime = 8,
+				},
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+				{ name = "NonCombatAbilities", },
+			},
+			attributes = {
+				{ type = health, level = 2 },
+				{ type = ranged, level = 5 },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\boy"),
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\weapon_ranged\\rokkit_launcha",
+				"wargear\\wargear\\core\\race_ork\\armor\\slugga_boy_rare",
+			},
+		},
+		{
+			name = "stikk bomba",
+			locName = 9120343,
+			points = 20,
+			loadout = 3,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 25 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_ork\\stikkbomb_all_entities"),
+					name = "Mass Stikkbomb",
+					requirements = {
+						{ name = "RechargeTime", min = 3, max = 7 },
+						{ name = "Chance", percent = 50 },
+					},
+				},
+			},
+			attributes = {
+				{ type = ranged, level = 2 },
+				{ type = health, level = 4 },
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", }
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\boy"),
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\weapon_melee\\stikkbomm",
+				"wargear\\wargear\\core\\race_ork\\weapon_ranged\\slugga",
+				"wargear\\wargear\\core\\race_ork\\armor\\slugga_boy_rare",
+				"wargear\\wargear\\core\\race_ork\\accessories\\stikkbombs_all_entities",
+			},
+		},
+		{
+			name = "Stronga Shoota",
+			locName = 9120340,
+			points = 20,
+			loadout = 4,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\boy"),
+			attributes = {
+				{ type = ranged, level = 4 },
+				{ type = health, level = 2 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\armor\\slugga_boy_epic",
+				"wargear\\wargear\\core\\race_ork\\weapon_ranged\\shoota",
+			},
+		},
+		{
+			name = "Deff Dread",
+			locName = 9120344,
+			points = 200,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\deff_dread"),
+			attributes = {
+				{ type = melee, level = 1 },
+				{ type = health, level = 12 },
+			},
+			wargear = {},
+		},
+		{
+			name = "Battlewagon",
+			locName = 9152630,
+			points = 400,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\ork_battlewagon"),
+			attributes = {
+				{ type = melee, level = 1 },
+				{ type = health, level = 12 },
+			},
+			wargear = {},
+		},
+		{
+			name = "Nob with 'Uge Hammer",
+			locName = 9120345,
+			points = 120,
+			loadout = 1,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\nob"),
+			attributes = {
+				{ type = melee, level = 6 },
+				{ type = health, level = 3 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\armor\\slugga_nob_common",
+				"wargear\\wargear\\core\\race_ork\\weapon_melee\\huge_hammer",
+			},
+		},
+		{
+			name = "Nob with Huge Choppa",
+			locName = 9120346,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 20 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_ork\\stikkbomb"),
+					name = "Stikkbomb",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 25 }
+					},
+				},
+			},
+			points = 120,
+			loadout = 1,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\nob"),
+			attributes = {
+				{ type = melee, level = 2 },
+				{ type = health, level = 3 },
+				{ type = ranged, level = 6 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\armor\\slugga_nob_common",
+				"wargear\\wargear\\core\\race_ork\\weapon_melee\\huge_choppa",
+				"wargear\\wargear\\core\\race_ork\\accessories\\stikkbombs_single",
+			},
+		},
+		{
+			name = "Storm Boyz",
+			locName = 9120347,
+			abilities = {
+				{
+					target = { name = "FindFarthestEnemy", distance = 45 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_ork\\stormboy_jump"),
+					name = "Stormboy Jump",
+					requirements = {
+						{ name = "RechargeTime", min = 10, max = 45, initialUse = true }
+					},
+				},
+			},
+			points = 35,
+			loadout = 4,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\boy"),
+			behaviorList = { { name = "CombatAbilities", }, },
+			attributes = {
+				{ type = health, level = 2 },
+				{ type = melee, level = 4 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\armor\\storm_boy_common",
+				"wargear\\wargear\\core\\race_ork\\armor\\storm_boy_rare",
+				"wargear\\wargear\\core\\race_ork\\weapon_melee\\choppa",
+				"wargear\\wargear\\core\\race_ork\\weapon_ranged\\slugga",
+			},
+		},
+		{
+			name = "Warboss Hero",
+			locName = 9120348,
+			abilities = {
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_ork\\warboss\\ork_damage_aoe_stomp"),
+					name = "Warboss Stomp",
+					abilityBehavior = "pointblank",
+					requirements = {
+						{ name = "RechargeTime", min = 4, max = 6 },
+						{ name = "Chance", percent = 0.6 },
+					},
+				},
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_ork\\warboss\\ork_warboss_desperation_smash"),
+					name = "Warboss Desperation Smash",
+					abilityBehavior = "pointblank",
+					requirements = {
+						{ name = "RechargeTime", min = 18, max = 26, initialUse = true },
+					},
+					waitTime = 5,
+				},
+				{
+					name = "Shockwave",
+					blueprint = Util_GetAbilityID("ability\\core\\race_ork\\warboss\\ork_boss_shockwave"),
+					target = { name = "FindEnemyNormalize", distance = 15, normalDistance = 0.1 },
+					requirements = {
+						{ name = "RechargeTime", min = 3, max = 14 },
+						{ name = "Chance", percent = 0.80 },
+					},
+					waitTime = 3,
+				},
+			},
+			behaviorList = {
+				{ 
+					name = "MeleeCombat", 
+					randomAttack = true,
+					requirements = { {name="RechargeTime", min = 4, max = 6} },
+				},
+			},
+			points = 300,
+			loadout = 1,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_ork\\survive\\warboss_hero"),
+			attributes = {
+				{ type = melee, level = 4 },
+				{ type = health, level = 10 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_ork\\armor\\war_boss_epic",
+				"wargear\\wargear\\core\\race_ork\\weapon_ranged\\kustom_shoota",
+				"wargear\\wargear\\core\\race_ork\\weapon_melee\\huge_hammer_warboss",
+				"wargear\\wargear\\core\\race_ork\\accessories\\warboss_desperation_smash",
+				"wargear\\wargear\\core\\race_ork\\accessories\\warboss_shockwave_special",
+			},
+		},
+	},
+	tyranids = {
+		{
+			name = "ripper",
+			locName = 9120349,
+			points = 1,
+			abilities = {},
+			behaviorList = {},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_tyranid\\ripper"),
+			wargear = {},
+		},
+		{
+			name = "hormagant",
+			locName = 9120350,
+			points = 8,
+			tags = {
+				"melee",
+				"chaff",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\hormagaunt"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_hormagaunt",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\hormagaunt_epic",
+			},
+			behaviorList = {
+				{ 
+					name = "SelfPreservation", 
+					percent = 0.50,
+					requirements = {
+						{ name = "Chance", percent = 0.05 },
+					},
+				},
+			},
+			attributes = {
+				{ type = melee, level = 2 },
+			},
+			level = 2,
+			maxLevel = 9,
+		},
+		{
+			name = "Hormagaunt Protector",
+			locName = 9120350,
+			points = -1,
+			tags = {
+				"melee",
+				"chaff",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\hormagaunt"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_hormagaunt",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\hormagaunt_epic",
+			},
+			attributes = {
+				{ type = melee, level = 6 },
+			},
+		},
+		{
+			name = "Genestealer Protector",
+			locName = 9120350,
+			points = -1,
+			loadout = 3,
+			tags = {
+				"melee",
+				"chaff",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\genestealer"),
+			attributes = {
+				{ type = melee, level = 1 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_genestealer_corrosive",
+			},
+		},
+		{
+			name = "termagant",
+			locName = 9120351,
+			points = 3,
+			tags = {
+				"ranged",
+				"weak",
+				"chaff",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\termagaunt"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\devourer_termagaunt",
+			},
+		},
+		{
+			name = "swarmlord",
+			locName = 9120351,
+			points = 3,
+			tags = {
+				"ranged",
+				"weak",
+				"chaff",
+			},
+			attributes = {
+				{ type = melee, level = 6 },
+				{ type = health, level = 6 },
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\survive\\swarmlord"),
+			wargear = {
+			},
+		},
+		{
+			name = "Termagaunt Protector",
+			locName = 9120351,
+			points = -1,
+			tags = {
+				"ranged",
+				"weak",
+				"chaff",
+				"protector",
+			},
+			attributes = {
+				{ type = ranged, level = 4 },
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\termagaunt"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\devourer_eroding_termagaunt",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\termagaunt_epic",
+			},
+		},
+		{
+			name = "warrior",
+			locName = 9120352,
+			points = 35,
+			loadout = 3,
+			abilities = {
+				{
+					target = { name = "FindEnemyOffset", distance = 30, offset = 8 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\tyr_warrior_charge"),
+					name = "Charge",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 20, }
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+			},
+			attributes = {
+				{ type = health, level = 5 },
+			},
+			tags = {
+				"melee",
+				"synapse",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\warrior"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_warrior",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\charge_warrior",
+			},
+		},
+		{
+			name = "Warrior Protector",
+			locName = 9120352,
+			points = -1,
+			loadout = 1,
+			abilities = {
+				{
+					target = { name = "FindEnemyNormalize", distance = 20, normalDistance = 25 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\tyr_warrior_charge"),
+					name = "Charge",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 10, }
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+			},
+			attributes = {
+				{ type = melee, level = 1 },
+			},
+			tags = {
+				"melee",
+				"synapse",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\warrior"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_warrior_rare",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\charge_warrior",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\warrior_armor_epic",
+			},
+		},
+		{
+			name = "warrior_venom_cannon",
+			locName = 9120352,
+			points = 35,
+			tags = {
+				"ranged",
+				"synapse",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\warrior"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_warrior",
+				"wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\venom_cannon_warrior",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\warrior_armor_epic",
+			},
+			room = {},
+			level = 3,
+			maxLevel = 4,
+		},
+		{
+			name = "zoanthrope",
+			locName = 9120353,
+			points = 60,
+			abilities = {
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\psychic_shield"),
+					name = "Psychic Shield",
+					abilityBehavior = "toggle",
+					requirements = {
+						{ name = "HealthLessThan", percent = 0.75 },
+						{ name = "Chance", percent = 0.20 },
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "ToggleAbilities", abilityBehavior = "toggle",},
+			},
+			tags = {
+				"ranged",
+				"synapse",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\survive\\zoanthrope_boss"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\warp_blast",
+			},
+			attributes = {
+				{ type = ranged, level = 6 },
+				{ type = energy, level = 4 },
+			},
+			room = {},
+			level = 6,
+		},
+		{
+			name = "Zoanthrope Protector",
+			locName = 9120353,
+			points = -1,
+			abilities = {
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\psychic_shield"),
+					name = "Psychic Shield",
+					abilityBehavior = "toggle",
+					requirements = {
+						{ name = "HealthLessThan", percent = 0.75 },
+						{ name = "Chance", percent = 0.20 },
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "ToggleAbilities", abilityBehavior = "toggle",},
+			},
+			tags = {
+				"ranged",
+				"synapse",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\zoanthrope"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\warp_blast",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\zoanthrope_epic",
+			},
+			attributes = {
+				{ type = health, level = 1 },
+				{ type = ranged, level = 6 },
+				{ type = energy, level = 6 },
+			},
+		},
+		{
+			name = "lictor",
+			locName = 9120354,
+			points = 50,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 30 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\tyr_flesh_hook_lictor"),
+					name = "Flesh Hook",
+					requirements = {
+						{ name = "RechargeTime", min = 1, max = 20, initialUse = true, id = "awesomesauce", }
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+				{ name = "NonCombatAbilities", },
+				{ name = "SelfPreservation", percent = 0.8, 
+					requirements = {
+						{ name = "Chance", percent = 0.15 },
+					},
+				},
+			},
+			tags = {
+				"melee",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\lictor"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\rending_claws_lictor",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\infiltrate_lictor",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\flesh_hook_lictor",
+			},
+			room = {},
+			level = 8,
+		},
+		{
+			name = "ravener",
+			locName = 9120355,
+			points = 50,
+			abilities = {
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\ravener\\jump_target"),
+					target = { name = "FindEnemyOffset", distance = 50, offset = 3 },
+					name = "Burrow Jump",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 20 }
+					},
+					waitTime = 5,
+				},
+			},
+			attributes = {
+				{ type = health, level = 3 },
+				{ type = ranged, level = 4 },
+			},
+			tags = {
+				"ranged",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\ravener"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\devourer_ravener",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\jump_target_ravener",
+			},
+		},
+		{
+			name = "Ravener Protector",
+			locName = 9120355,
+			points = -1,
+			abilities = {
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\ravener\\jump_target"),
+					target = { name = "FindEnemyOffset", distance = 50, offset = 3 },
+					name = "Burrow Jump",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 15 }
+					},
+					waitTime = 5,
+				},
+			},
+			loadout = 1,
+			attributes = {
+				{ type = ranged, level = 7 },
+			},
+			behaviorList = {
+				{name="NonCombatAbilities"},
+				{
+					name="CombatAbilities",
+					requirements = {
+						{ name = "RechargeTime", min = 3, max = 5 },
+						{ name = "Chance", percent = 0.45 },
+					},
+				},
+			},
+			tags = {
+				"ranged",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\ravener"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_ranged\\devourer_ravener_epic",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\jump_target_ravener",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\ravener_epic",
+			},
+		},
+		{
+			name = "hive_tyrant",
+			locName = 9120356,
+			points = 100,
+			attributes = {
+				{ type = health, level = 2 }
+			},
+			abilities = {
+				{ 
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\crawler\\tyr_seismic_roar"),
+					name = "Seismic Roar",
+					requirements = {
+						{ name = "RechargeTime", min = 1, max = 40, initialUse = true, id = "awesomesauce", },
+						{ name = "Chance", percent = 0.8 },
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+			},
+			tags = {
+				"melee",
+				"synapse",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\hive_tyrant"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_hive_tyrant",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\hive_tyrant_rare",
+			},
+			room = {},
+			level = 10,
+		},
+		{
+			name = "carnifex",
+			locName = 9120357,
+			points = 500,
+			attributes = {
+				{ type = health, level = 14 },
+				{ type = melee, level = 6 },
+			},
+			abilities = {
+				{ 
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\carnifex\\damage_aoe_charge"),
+					target = { name = "FindEnemyOffset", distance = 40, offset = 5, minimum = 10 },
+					name = "Charge",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 20 }
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "NonCombatAbilities", },
+			},
+			tags = {
+				"melee",
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\charge_carnifex",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\carnifex"),
+		},
+		{
+			name = "Lictor Hero",
+			locName = 9120358,
+			points = 300,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 30 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\tyr_flesh_hook_lictor"),
+					name = "Flesh Hook",
+					requirements = {
+						{ name = "RechargeTime", min = 4, max = 15 }
+					},
+					waitTime = 4,
+				},
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\tyr_infiltration_lictor"),
+					name = "Infiltration",
+					abilityBehavior = "toggle",
+					toggleOn = "moving",
+					id = "unique",
+				},
+			},
+			attributes = {
+				{ type = health, level = 5 },
+				{ type = energy, level = 5 },
+				{ type = ranged, level = 2 },
+				{ type = melee, level = 8 },
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+				{ name = "NonCombatAbilities", },
+				{ 
+					name = "SelfPreservation", 
+					percent = 0.7, 
+					requirements = {
+						{ name = "Chance", percent = 0.30 },
+						{ name = "RechargeTime", min = 1, max = 4 },
+					},
+				},
+				{ name = "ToggleAbilities", abilityBehavior = "toggle",},
+				{ 
+					name = "AttackWeakestTarget",
+					distance = 30,
+					requirements = {
+						{ name = "RechargeTime", min = 1, max = 8 },
+					},
+				},
+			},
+			tags = {
+				"alpha",
+				"melee",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\survive\\lictor_hero"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\rending_claws_lictor",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\lictor_armor_epic",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\infiltrate_lictor",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\flesh_hook_lictor",
+			},
+		},
+		{
+			name = "Lictor",
+			locName = 9120358,
+			points = 300,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 30 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\tyr_flesh_hook_lictor"),
+					name = "Flesh Hook",
+					requirements = {
+						{ name = "RechargeTime", min = 4, max = 15 }
+					},
+					waitTime = 4,
+				},
+				{
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\tyr_infiltration_lictor"),
+					name = "Infiltration",
+					abilityBehavior = "toggle",
+					toggleOn = "moving",
+					id = "unique",
+				},
+			},
+			attributes = {
+				{ type = health, level = 5 },
+				{ type = energy, level = 3 },
+				{ type = ranged, level = 1 },
+				{ type = melee, level = 5 },
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+				{ name = "NonCombatAbilities", },
+				{ name = "ToggleAbilities", abilityBehavior = "toggle",},
+				{ 
+					name = "AttackWeakestTarget",
+					distance = 30,
+					requirements = {
+						{ name = "RechargeTime", min = 1, max = 8 },
+					},
+				},
+			},
+			tags = {
+				"alpha",
+				"melee",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\lictor"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\rending_claws_lictor",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\lictor_armor_epic",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\infiltrate_lictor",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\flesh_hook_lictor",
+			},
+		},
+		{
+			name = "warrior_alpha",
+			locName = 9062706,
+			points = 100,
+			abilities = {
+				{
+					target = { name = "FindFarthestEnemy", distance = 30 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\tyr_warrior_charge"),
+					name = "Charge",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 20, id = "chargeAbility", }
+					},
+				},
+			},
+			attributes = {
+				{ type = health, level = 7 },
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+				{ 
+					name = "ReplaceOnFirstCombat", 
+					replacement = "SearchAndDestroyWithFriends", 
+					id = 1,
+					tag = "chaff",
+					range = 40,
+				},
+				{ 
+					name = "RandomCombatTargets",
+					distance = 20,
+					requirements = {
+						{ name = "RechargeTime", min = 4, max = 12, id = "RCTRechargeReqs", },
+					},
+				},
+			},
+			modifiers = {
+				{
+					modifier = "modifiers\\entity_modifiers\\health_maximum_modifier",
+					factor = 1.5,
+				},
+			},
+			tags = {
+				"alpha",
+				"melee",
+				"synapse",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\warrior"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_warrior",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\warrior_armor_epic",
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\charge_warrior",
+			},
+			room = {},
+			level = 8,
+		},
+		{
+			name = "hive_tyrant_alpha",
+			locName = 9100887,
+			points = 100,
+			attributes = {
+				{ type = health, level = 14, },
+			},
+			abilities = {
+				{ 
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\crawler\\tyr_seismic_roar"),
+					name = "Seismic Roar",
+					requirements = {
+						{ name = "RechargeTime", min = 5, max = 20, initialUse = true, id = "awesomesauce", }
+					},
+				},
+			},
+			behaviorList = {
+				{ 
+					name = "CallFriendsInCombat",
+					requirements = {
+						{ name = "RechargeTime", min = 4, max = 24, id = "moreawesomesauce", }
+					},
+				},
+				{ name = "CombatAbilities", },
+				{ 
+					name = "AttackStrongestTarget",
+					distance = 30,
+					requirements = {
+						{ name = "RechargeTime", min = 4, max = 12, id = "ASTRechargeReqs", },
+					},
+				},
+			},
+			modifiers = {
+--~ 				{ -- Remove this modifier, he was already super beefy, he has tons of armor (250)
+--~ 					modifier = "modifiers\\entity_modifiers\\health_maximum_modifier",
+--~ 					factor = 2.0,
+--~ 					mathtype = MUT_Multiplication,
+--~ 					exclusive = false,
+--~ 				},
+			},
+			tags = {
+				"alpha",
+				"melee",
+				"synapse",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\hive_tyrant"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\weapon_melee\\scything_talons_hive_tyrant",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\hive_tyrant_epic",
+			},
+			room = {},
+			level = 8,
+		},
+		{
+			name = "Tyrant Guard Protector",
+			locName = 9129892,
+			points = -1,
+			loadout = 2,
+			abilities = {
+				{
+					target = { name = "OwnersAttacker", filterOutEntityType = "hero" },
+					blueprint = Util_GetAbilityID("ability\\core\\race_tyranid\\taunt_target"),
+					name = "Taunt Target",
+					requirements = {
+						{ name = "RechargeTime", min = 3, max = 6, },
+						{ name = "Chance", percent = 0.6 }
+					},
+				},
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+			},
+			tags = {
+				"melee",
+				"synapse",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\tyrant_guard"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\taunt_target",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\tyrant_guard_epic",
+			},
+		},
+		{
+			name = "Tyrant Guard",
+			locName = 9129892,
+			points = 100,
+			loadout = 2,
+			abilities = {
+			},
+			attributes = {
+				{ type = health, level = 8, },
+			},
+			behaviorList = {
+				{ name = "CombatAbilities", },
+			},
+			tags = {
+				"melee",
+				"synapse",
+				"protector",
+			},
+			sbp = World_GetPropertyBagGroupID("sbps\\core\\race_tyranid\\tyrant_guard"),
+			wargear = {
+				"wargear\\wargear\\core\\race_tyranid\\accessories\\taunt_target",
+				"wargear\\wargear\\core\\race_tyranid\\armor\\tyrant_guard_epic",
+			},
+		},
+	},
+	chaos = {
+		{
+			name = "Chaos Lord",
+			locName = 9120359,
+			points = 4000,
+			abilities = {
+				{
+					target = { name = "FindEnemy", distance = 30 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_chaos\\life_drain_chaos_lord"),
+					name = "Drain Life",
+					abilityBehavior = "drain_life",
+					requirements = {
+						{ name = "RechargeTime", min = 6, max = 12, initialUse = true, }
+					},
+					waitTime = 7,
+				},
+				{
+					target = { name = "FindEnemy", distance = 50, minimum = 8 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_chaos\\fireball"),
+					name = "Fireball",
+					requirements = {
+						{ name = "RechargeTime", min = 6, max = 12, initialUse = true, }
+					},
+					waitTime = 3,
+				},
+			},
+			behaviorList = {
+				{ 
+					name = "MeleeCombat", 
+					randomAttack = true,
+					requirements = { {name="RechargeTime", min = 4, max = 6} },
+				},
+				{
+					name = "CombatAbilities",
+					abilityBehavior = "drain_life",
+					requirements = {
+						{ name = "HealthLessThan", percent = 0.50 },
+					},
+				},
+				{ name = "CombatAbilities", },
+				{ name = "NonCombatAbilities", },
+			},
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\chaos_lord_hero"),
+			attributes = {
+				{ type = health, level = 15 },
+				{ type = melee, level = 4 },
+				{ type = ranged, level = 6 },
+				{ type = energy, level = 10 },
+			},
+			wargear = {
+				"wargear\\wargear\\core\\race_chaos\\accessories\\survive\\summon_doppelganger",
+				"wargear\\wargear\\core\\race_chaos\\accessories\\survive\\drain_life",
+				"wargear\\wargear\\core\\race_chaos\\armor\\chaos_lord_rare",
+				"wargear\\wargear\\core\\race_chaos\\accessories\\survive\\fireball",
+				"wargear\\wargear\\core\\race_chaos\\accessories\\nimbus",
+			},
+		},
+		{
+			name = "bloodletters",
+			abilities = {
+				{
+					target = { name = "FindEnemyOffset", distance = 30, offset = 2, minimum = 4 },
+					blueprint = Util_GetAbilityID("ability\\core\\race_chaos\\bloodletter\\teleport_target"),
+					name = "Bloodletter Teleport",
+					requirements = {
+						{ name = "RechargeTime", min = 1, max = 7, }
+					},
+				},
+			},
+			locName = 9120360,
+			points = 100,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\bloodletter"),
+			attributes = {
+				{ type = health, level = 4 },
+				{ type = melee, level = 7 },
+			},
+			wargear = { 
+				"wargear\\wargear\\core\\race_chaos\\weapon_melee\\hellblade_bloodletter",
+				"wargear\\wargear\\core\\race_chaos\\accessories\\teleport_bloodletter",
+			},
+		},
+		{
+			name = "cultists",
+			locName = 9129822,
+			points = 5,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\cultist"),
+			attributes = {
+			},
+			wargear = { 
+			},
+			abilities = {
+--~ 				{
+--~ 					blueprint = Util_GetAbilityID("ability\\core\\race_chaos\\csm_self_worship"),
+--~ 					name = "Worship",
+--~ 					abilityBehavior = "toggle",
+--~ 					toggleOn = "moving",
+--~ 					waitTime = 50,
+--~ 					requirements = {
+--~ 						{ name = "RechargeTime", min = 2, max = 6, id = "awesomesauce", },
+--~ 						{ name = "Chance", percent = 0.330 },
+--~ 					},
+--~ 				},
+			},
+		},
+		{
+			name = "cultists grenade launcher",
+			locName = 9129822,
+			points = 100,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\cultist"),
+			attributes = {
+			},
+			wargear = { 
+				"wargear\\wargear\\core\\race_chaos\\weapon_ranged\\grenade_launcher",
+			},
+			abilities = {
+--~ 				{
+--~ 					blueprint = Util_GetAbilityID("ability\\core\\race_chaos\\csm_self_worship"),
+--~ 					name = "Worship",
+--~ 					abilityBehavior = "toggle",
+--~ 					toggleOn = "moving",
+--~ 					waitTime = 50,
+--~ 					requirements = {
+--~ 						{ name = "RechargeTime", min = 2, max = 6, id = "awesomesauce", },
+--~ 						{ name = "Chance", percent = 0.330 },
+--~ 					},
+--~ 				},
+			},
+		},
+		{
+			name = "Chaos Marines",
+			abilities = {
+			},
+			locName = 9115283,
+			points = 60,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\csm_tactical_marine"),
+			attributes = {
+				{ type = ranged, level = 3 },
+				{ type = health, level = 5 },
+			},
+			wargear = { 
+			},
+		},
+		{
+			name = "Chaos Marines Melee",
+			abilities = {
+			},
+			locName = 9115283,
+			points = 100,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\csm_tactical_marine"),
+			attributes = {
+				{ type = melee, level = 3 },
+				{ type = health, level = 5 },
+			},
+			wargear = { 
+				"wargear\\wargear\\core\\race_chaos\\weapon_melee\\chain_sword",
+				"wargear\\wargear\\core\\race_chaos\\weapon_ranged\\bolt_pistol",
+			},
+		},
+		{
+			name = "Chaos Dreadnought",
+			abilities = {
+			},
+			locName = 9111180,
+			points = 200,
+			tags = { "NPC", },
+			behaviorList = {
+				{name="SearchAndDestroy"}, 
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\csm_dreadnought"),
+			attributes = {
+				{ type = ranged, level = 8 },
+				{ type = health, level = 4 },
+			},
+			wargear = { 
+			},
+		},
+		{
+			name = "Chaos Predator",
+			abilities = {
+			},
+			locName = 9111192,
+			points = 300,
+			tags = { "NPC", },
+			behaviorList = {
+				{name="SearchAndDestroy"}, 
+			},
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\csm_predator"),
+			attributes = {
+				{ type = ranged, level = 3 },
+				{ type = health, level = 10 },
+			},
+			wargear = { 
+			},
+		},
+		{
+			name = "Noise Marines",
+			abilities = {
+			},
+			locName = 9137896,
+			points = 100,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\survive\\noise_marines"),
+			attributes = {
+			},
+			wargear = { 
+			},
+		},
+		{
+			name = "Great Unclean One",
+			abilities = {
+			},
+			locName = 9111219,
+			points = 500,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\great_unclean_one"),
+			attributes = {
+				{ type = melee, level = 8 },
+				{ type = health, level = 8 },
+			},
+			wargear = { 
+			},
+		},
+		{
+			name = "Juggernaut",
+			abilities = {
+			},
+			locName = 9120360,
+			points = 100,
+			tags = { "NPC", },
+			sbp = Util_GetSquadBlueprintID("sbps\\core\\race_chaos\\csm_juggernaut"),
+			attributes = {
+				{ type = melee, level = 3 },
+				{ type = health, level = 3 },
+			},
+			wargear = { 
+			},
+		},
+	},
+}
+
+Survive.data.specialUnitData = {
+	["sbps\\core\\race_chaos\\survive\\chaos_sorcerer_hero"] = {
+		abilities = {
+			{
+				name = "Summon Doppelganger",
+				blueprint = Util_GetAbilityID("ability\\core\\race_chaos\\survive\\summon_doppelganger_advanced"),
+				target = { name = "GetDoppelgangerTarget", distance = 20 },
+				requirements = {
+					{ name = "RechargeTime", min = 15, max = 50 },
+				},
+			},
+		},
+	},
+}
+
+Survive.data.unitName = { }
+Survive.data.unitTag = { }
+for raceKey, race in pairs(Survive.data.unitList) do
+	for k, v in pairs(race) do
+		if (type(v.name) == "string") then
+			Survive.data.unitName[v.name] = v
+		end
+		if (type(v.tags) == "table") then
+			for tagKey, tag in pairs(v.tags) do
+				Survive.data.unitTag[tag] = Survive.data.unitTag[tag] or { }
+				table.insert(Survive.data.unitTag[tag], v)
+			end
+		end
+	end
+end
+

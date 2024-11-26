@@ -1,0 +1,2540 @@
+
+
+local introTaunt = {
+	w01_ch = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w01_ch",
+	w02_el = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w02_el",
+	w03_sm = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w03_sm",
+	w05_ok = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w05_ok",
+	w06_ig = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w06_ig",
+	w07_ty = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w07_ty",
+	w08_sm = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w08_sm",
+	w09_ig = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w09_ig",
+	w10_ok = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w10_ok",
+	w11_el = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w11_el",
+	w12_ch = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w12_ch",
+	w13_ty = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w13_ty",
+	w14_sm = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w14_sm",
+	w15_ig = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w15_ig",
+	w16_ok = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w16_ok",
+	w17_el = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w17_el",
+	w18_ch = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w18_ch",
+	w19_ig = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w19_ig",
+	w20_sm = "Streamed_speech/UI/IN_GAME/LS_Wave_Intros/w20_sm",
+	w01_ch_sfx = "UI/IN_GAME/LS_Wave_Intros/w01_ch_sfx",
+	w02_el_sfx = "UI/IN_GAME/LS_Wave_Intros/w02_el_sfx",
+	w03_sm_sfx = "UI/IN_GAME/LS_Wave_Intros/w03_sm_sfx",
+	w0407_ty_sfx = "UI/IN_GAME/LS_Wave_Intros/w0407_ty_sfx",
+	w0510_or_sfx = "UI/IN_GAME/LS_Wave_Intros/w0510_or_sfx",
+	w0609_ig_sfx = "UI/IN_GAME/LS_Wave_Intros/w0609_ig_sfx",
+	w08_sm_sfx = "UI/IN_GAME/LS_Wave_Intros/w08_sm_sfx",
+	w11_el_sfx = "UI/IN_GAME/LS_Wave_Intros/w11_el_sfx",
+	w12_ch_sfx = "UI/IN_GAME/LS_Wave_Intros/w12_ch_sfx",
+	w13_ty_sfx = "UI/IN_GAME/LS_Wave_Intros/w13_ty_sfx",
+	w14_sm_sfx = "UI/IN_GAME/LS_Wave_Intros/w14_sm_sfx",
+	w15_ig_sfx = "UI/IN_GAME/LS_Wave_Intros/w15_ig_sfx",
+	w16_or_sfx = "UI/IN_GAME/LS_Wave_Intros/w16_or_sfx",
+	w17_el_sfx = "UI/IN_GAME/LS_Wave_Intros/w17_el_sfx",
+	w18_ch_sfx = "UI/IN_GAME/LS_Wave_Intros/w18_ch_sfx",
+	w19_ig_sfx = "UI/IN_GAME/LS_Wave_Intros/w19_ig_sfx",
+	w20_sm_sfx = "UI/IN_GAME/LS_Wave_Intros/w20_sm_sfx",
+}
+
+SurviveWaves = {
+
+	-- Wave 1
+	{
+		wavePortrait = "chaos_marines/portraits/csm_chaos_marine",
+		waveNumber = 1,
+		name = 9115675,
+		bandName = 9115670,
+		teamColour = "Chaos_BlackLegion",
+		experienceReward = 100,
+
+		actions = {
+			{
+				delay = 2,
+				action = "playSound",
+				path = introTaunt.w01_ch,
+			},
+			{
+				delay = 4,
+				action = "playSound",
+				path = introTaunt.w01_ch_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/chaos",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 2,
+				name = "cultists grenade launcher",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+					{name="CombatAbilities"}, 
+					{name="NonCombatAbilities"},
+					{ name = "ToggleAbilities", abilityBehavior = "toggle" },
+				}
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "cultists grenade launcher",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+					{name="CombatAbilities"}, 
+					{name="NonCombatAbilities"},
+					{ name = "ToggleAbilities", abilityBehavior = "toggle" },
+				}
+			},
+			{
+				location = 1,
+				timeOffset = 15,
+				count = 1,
+				name = "Chaos Marines Melee",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}},
+			},
+			{
+				location = 2,
+				timeOffset = 15,
+				count = 1,
+				name = "Chaos Marines Melee",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 1,
+				name = "Chaos Marines Melee",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 2,
+				name = "cultists grenade launcher",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+					{name="CombatAbilities"}, 
+					{name="NonCombatAbilities"},
+					{ name = "ToggleAbilities", abilityBehavior = "toggle" },
+				}
+			},	
+		},
+	},
+	-- Wave 2
+	{
+		wavePortrait = "eldar/portraits/eld_banshee",
+		waveNumber = 2,
+		name = 9115676,
+		bandName = 9115670,
+		teamColour = "Eldar_Biel_Tan",
+		experienceReward = 100,
+		
+		actions = {
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w02_el,
+			},
+			{
+				delay = 10,
+				action = "playSound",
+				path = introTaunt.w02_el_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/eldar",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 5,
+				count = 1,
+				name = "wraithguard",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 5,
+				count = 1,
+				name = "wraithguard",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 5,
+				count = 1,
+				name = "wraithguard",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 20,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 20,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+		},
+	},
+
+	-- Wave 3
+	{
+		wavePortrait = "space_marines/portraits/sm_assault_marine",
+		waveNumber = 3,
+		name = 9115677,
+		bandName = 9115670,
+		teamColour = "SM_Brazen_Claws",
+		experienceReward = 100,
+		
+		actions = {
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w03_sm,
+			},
+			{
+				delay = 5,
+				action = "playSound",
+				path = introTaunt.w03_sm_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/sm",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},	
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="SearchAndDestroy"}},
+			},	
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="SearchAndDestroy"}},
+			},	
+			{
+				location = 2,
+				timeOffset = 10,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="SearchAndDestroy"}},
+			},	
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 1,
+				name = "devestator",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},	
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "devestator",
+				behaviors = {{name="SearchAndDestroy"}},
+			},	
+		},
+	},
+	
+
+	-- Wave 4
+	{
+		wavePortrait = "tyranids/portraits/tyr_lictor",
+		waveNumber = 4,
+		name = 9115675,
+		bandName = 9115671,
+		teamColour = "Tyranid_Leviathan_1",
+		experienceReward = 100,
+		
+		actions = {
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w0407_ty_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/tyranids",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 2,
+				timeOffset = 10,
+				count = 1,
+				name = "Lictor",
+				behaviors = {{name="Stalker"},},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 1,
+				name = "Lictor",
+				behaviors = {{name="Stalker"},},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "ravener",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+					{name="NonCombatAbilities"},
+					{
+						name="CombatAbilities",
+						requirements = {
+							{ name = "RechargeTime", min = 3, max = 5 },
+							{ name = "Chance", percent = 0.45 },
+						},
+					},
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 1,
+				name = "ravener",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+					{name="NonCombatAbilities"},
+					{
+						name="CombatAbilities",
+						requirements = {
+							{ name = "RechargeTime", min = 3, max = 5 },
+							{ name = "Chance", percent = 0.45 },
+						},
+					},
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 1,
+				name = "ravener",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+					{name="NonCombatAbilities"},
+					{
+						name="CombatAbilities",
+						requirements = {
+							{ name = "RechargeTime", min = 3, max = 5 },
+							{ name = "Chance", percent = 0.45 },
+						},
+					},
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "hormagant",
+				behaviors = {{name="SearchAndDestroy", distance="near"}},
+			},
+			{
+				location = 2,
+				timeOffset = 10,
+				count = 2,
+				name = "hormagant",
+				behaviors = {{name="SearchAndDestroy", distance="far"}},
+			},
+			{
+				location = 3,
+				timeOffset = 20,
+				count = 2,
+				name = "hormagant",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 30,
+				count = 2,
+				name = "hormagant",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+		},
+	},
+	-- Wave 5
+	{
+		wavePortrait = "orks/portraits/ork_wartrukk",
+		waveNumber = 5,
+		name = 9115676,
+		bandName = 9115671,
+		teamColour = "Ork_Bad_Moonz_clan",
+		experienceReward = 100,
+		
+		actions = {
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w05_ok,
+			},
+			{
+				delay = 9,
+				action = "playSound",
+				path = introTaunt.w0510_or_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/orks",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 1,
+				name = "wartrukk",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 4,
+				name = "Nob with Huge Choppa",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 2,
+				timeOffset = 15,
+				count = 2,
+				name = "stikk bomba",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 2,
+				name = "stikk bomba",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 35,
+				count = 2,
+				name = "stikk bomba",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "Stronga Shoota",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 2,
+				name = "Stronga Shoota",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 2,
+				name = "Stronga Shoota",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "Stronga Shoota",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "Stronga Shoota",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 1,
+				name = "Stronga Shoota",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+		},
+	},	
+	-- Wave 6
+	{
+		wavePortrait = "imperial_guard/portraits/ig_ogryn_squad",
+		waveNumber = 6,
+		name = 9115703,
+		bandName = 9115671,
+		teamColour = "IG_122nd_Cadian",
+		experienceReward = 200,
+		
+		actions = {
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w06_ig,
+			},
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w0609_ig_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/ig",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 4,
+				name = "guardsmen",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 4,
+				name = "guardsmen",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 4,
+				name = "guardsmen",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 4,
+				name = "guardsmen",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "ogryn",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 2,
+				name = "ogryn",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 2,
+				timeOffset = 30,
+				count = 2,
+				name = "ogryn",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 30,
+				count = 2,
+				name = "ogryn",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+		},
+	},
+	-- Wave 7
+	{
+		wavePortrait = "tyranids/portraits/tyr_tyrant_guard",
+		waveNumber = 7,
+		name = 9115677,
+		bandName = 9115671,
+		teamColour = "Tyranid_Kraken",
+		experienceReward = 200,
+		
+		actions = {
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w07_ty,
+			},
+			{
+				delay = 10,
+				action = "playSound",
+				path = introTaunt.w0407_ty_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/tyranids",
+			combatValue = 3,
+		},
+
+		spawnList = {
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "warrior_venom_cannon",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 25,
+				count = 2,
+				name = "warrior_venom_cannon",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 45,
+				count = 2,
+				name = "warrior_venom_cannon",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "Tyrant Guard",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 1,
+				name = "Tyrant Guard",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 1,
+				name = "Tyrant Guard",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 1,
+				name = "Tyrant Guard",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 5,
+				count = 1,
+				name = "termagant",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 2,
+				timeOffset = 5,
+				count = 2,
+				name = "termagant",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 1,
+				name = "termagant",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 2,
+				name = "termagant",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			
+		},
+	},
+
+	-- Wave 8
+	{
+		wavePortrait = "space_marines/portraits/sm_apothecary",
+		waveNumber = 8,
+		name = 9115675,
+		bandName = 9115672,
+		teamColour = "SM_Darkangels",
+		experienceReward = 200,
+		
+		actions = {
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w08_sm,
+			},
+			{
+				delay = 5,
+				action = "playSound",
+				path = introTaunt.w08_sm_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/sm",
+			combatValue = 3,
+		},
+		
+
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 20,
+				count = 1,
+				name = "apothecary",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 20,
+				count = 1,
+				name = "apothecary",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 20,
+				count = 1,
+				name = "apothecary",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 20,
+				count = 1,
+				name = "apothecary",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 15,
+				count = 1,
+				name = "space marine",
+				behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+			},
+			{
+				location = 2,
+				timeOffset = 15,
+				count = 1,
+				name = "space marine",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 2,
+				name = "space marine",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 15,
+				count = 2,
+				name = "space marine",
+				behaviors = {{name="SearchAndDestroy", distance="near"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "Dreadnought",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 1,
+				name = "Dreadnought",
+				behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+			},	
+		},
+
+	},	
+	
+	-----------------------------------------------
+	-- Wave 9
+	{
+		wavePortrait = "imperial_guard/portraits/ig_stormtrooper_squad",
+		waveNumber = 9,
+		name = 9115703,
+		bandName = 9115671,
+		teamColour = "IG_182nd_Moloch_Rifles",
+		experienceReward = 200,
+		
+		actions = {
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w09_ig,
+			},
+			{
+				delay = 7,
+				action = "playSound",
+				path = introTaunt.w0609_ig_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/ig",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 4,
+				timeOffset = 10,
+				count = 1,
+				name = "HeavyWeapons",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 10,
+				count = 2,
+				name = "HeavyWeapons",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 3,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 3,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 3,
+				name = "Catachan",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 3,
+				name = "Catachan",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 10,
+				count = 1,
+				name = "Chimera",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 1,
+				name = "Chimera",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+		},
+
+	},
+	-- Wave 10
+	{
+		wavePortrait = "orks/portraits/ork_nob",
+		waveNumber = 10,
+		name = 9115676,
+		bandName = 9115672,
+		teamColour = "Ork_Death_Skulls_clan",
+		experienceReward = 200,
+		
+		actions = {
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w10_ok,
+			},
+			{
+				delay = 9,
+				action = "playSound",
+				path = introTaunt.w0510_or_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/orks",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 4,
+				timeOffset = 10,
+				count = 1,
+				name = "rokkit launcha",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 25,
+				count = 1,
+				name = "rokkit launcha",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 10,
+				count = 1,
+				name = "Nob with Huge Choppa",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}},
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 1,
+				name = "Nob with Huge Choppa",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}},
+			},
+			{
+				location = 3,
+				timeOffset = 10,
+				count = 1,
+				name = "Nob with Huge Choppa",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}},
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "Stronga Shoota",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 1,
+				count = 1,
+				name = "Deff Dread",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 1,
+				name = "Deff Dread",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 15,
+				count = 1,
+				name = "Deff Dread",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 5,
+				count = 1,
+				name = "Stronga Shoota",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 5,
+				count = 2,
+				name = "Stronga Shoota",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "Stronga Shoota",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "Stronga Shoota",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 2,
+				name = "Stronga Shoota",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+		},
+	},
+	-- Wave 11
+	{
+		wavePortrait = "eldar/portraits/eld_fire_prism",
+		waveNumber = 11,
+		name = 9115677,
+		bandName = 9115672,
+		experienceReward = 300,
+		teamColour = "Eldar_Iyanden",
+		
+		actions = {
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w11_el,
+			},
+			{
+				delay = 9,
+				action = "playSound",
+				path = introTaunt.w11_el_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/eldar",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 10,
+				count = 2,
+				name = "warp spider",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 10,
+				count = 2,
+				name = "warp spider",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 20,
+				count = 1,
+				name = "seer council",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 25,
+				count = 1,
+				name = "fireprism",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 1,
+				name = "fireprism",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 15,
+				count = 3,
+				name = "banshee",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 2,
+				timeOffset = 15,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 2,
+				name = "warp spider",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 15,
+				count = 2,
+				name = "warp spider",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+		},
+	},
+
+	
+	-----------------------------------------------
+	-- Wave 12
+	{
+		wavePortrait = "chaos_marines/portraits/csm_juggernaut",
+		waveNumber = 12,
+		name = 9115675,
+		bandName = 9115670,
+		teamColour = "Chaos_WorldEaters",
+		experienceReward = 300,
+
+		actions = {
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w12_ch,
+			},
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w12_ch_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/chaos",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "cultists",
+				behaviors = {
+					{name="CaptureThenDestroy"}, {name="Retaliation"}
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 2,
+				name = "cultists",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 3,
+				name = "cultists",
+				behaviors = {
+					{name="CaptureThenDestroy"}, {name="Retaliation"}
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 15,
+				count = 3,
+				name = "cultists",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 1,
+				name = "Juggernaut",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 1,
+				name = "Juggernaut",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 45,
+				count = 1,
+				name = "Juggernaut",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 45,
+				count = 1,
+				name = "Juggernaut",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 35,
+				count = 1,
+				name = "Chaos Dreadnought",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 15,
+				count = 1,
+				name = "Chaos Dreadnought",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 50,
+				count = 1,
+				name = "Chaos Predator",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+		},
+	},
+	-- Wave 13
+	{
+		wavePortrait = "tyranids/portraits/tyr_swarmlord",
+		waveNumber = 13,
+		name = 9115675,
+		bandName = 9115671,
+		teamColour = "Tyranid_Behemoth",
+		experienceReward = 300,
+		
+		actions = {
+			{
+				delay = 4,
+				action = "playSound",
+				path = introTaunt.w13_ty,
+			},
+			{
+				delay = 11,
+				action = "playSound",
+				path = introTaunt.w13_ty_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/tyranids",
+			combatValue = 3,
+		},
+				
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 5,
+				count = 2,
+				name = "warrior",
+				behaviors = {{name="SearchAndDestroy", distance="near"}},
+			},
+			{
+				location = 2,
+				timeOffset = 5,
+				count = 1,
+				name = "warrior",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 3,
+				timeOffset = 5,
+				count = 3,
+				name = "hormagant",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 5,
+				count = 3,
+				name = "hormagant",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 1,
+				name = "swarmlord",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 25,
+				count = 1,
+				name = "warrior",
+				behaviors = {{name="SearchAndDestroy", distance="near"}},
+			},
+			{
+				location = 2,
+				timeOffset = 25,
+				count = 1,
+				name = "warrior",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 3,
+				name = "hormagant",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 3,
+				name = "hormagant",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 15,
+				count = 2,
+				name = "zoanthrope",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 15,
+				count = 2,
+				name = "zoanthrope",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+		},
+	},
+	-- Wave 14
+	{
+		wavePortrait = "space_marines/portraits/sm_dreadnought",
+		waveNumber = 14,
+		name = 9115677,
+		bandName = 9115670,
+		teamColour = "SM_Ultramarines",
+		experienceReward = 300,
+		
+		actions = {
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w14_sm,
+			},
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w14_sm_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/sm",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "scout",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "scout",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 2,
+				name = "scout",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 1,
+				timeOffset = 25,
+				count = 3,
+				name = "scout",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},
+			{
+				location = 1,
+				timeOffset = 20,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+			},
+			{
+				location = 1,
+				timeOffset = 30,
+				count = 2,
+				name = "assault marine",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},	
+			{
+				location = 2,
+				timeOffset = 30,
+				count = 2,
+				name = "assault marine",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},	
+			{
+				location = 1,
+				timeOffset = 15,
+				count = 1,
+				name = "Dreadnought Assault Cannon",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 15,
+				count = 1,
+				name = "Dreadnought Assault Cannon",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 1,
+				name = "Dreadnought Assault Cannon",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 30,
+				count = 1,
+				name = "Predator",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+		},
+	},
+	
+	-- Wave 15
+	{
+		wavePortrait = "imperial_guard/portraits/ig_leman_russ",
+		waveNumber = 15,
+		name = 9115703,
+		bandName = 9115671,
+		teamColour = "IG_31st_Harakoni_Warhawks",
+		experienceReward = 300,
+		
+		actions = {
+			{
+				delay = 7,
+				action = "playSound",
+				path = introTaunt.w15_ig,
+			},
+			{
+				delay = 7,
+				action = "playSound",
+				path = introTaunt.w15_ig_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/ig",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 20,
+				count = 2,
+				name = "ogryn",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 20,
+				count = 2,
+				name = "ogryn",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 1,
+				name = "HeavyWeapons",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 1,
+				name = "HeavyWeapons",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "ogryn",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 2,
+				name = "ogryn",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 20,
+				count = 1,
+				name = "HeavyWeapons",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 20,
+				count = 1,
+				name = "HeavyWeapons",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 1,
+				name = "sentinel",
+				behaviors = {
+					{name="CaptureThenDestroy"}, {name="Retaliation"}
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 15,
+				count = 1,
+				name = "sentinel",
+				behaviors = {
+					{name="CaptureThenDestroy"}, {name="Retaliation"}
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 45,
+				count = 1,
+				name = "Leman Russ",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 45,
+				count = 1,
+				name = "Leman Russ",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+		},
+	},
+
+	-- Wave 16
+	{
+		wavePortrait = "orks/portraits/ork_battlewagon",
+		waveNumber = 16,
+		name = 9115676,
+		bandName = 9115671,
+		teamColour = "Ork_Freebooterz",
+		experienceReward = 400,
+		
+		actions = {
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w16_ok,
+			},
+			{
+				delay = 12,
+				action = "playSound",
+				path = introTaunt.w16_or_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/orks",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "Deff Dread",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 1,
+				name = "Deff Dread",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "Storm Boyz",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 1,
+				timeOffset = 15,
+				count = 2,
+				name = "Storm Boyz",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 2,
+				name = "Storm Boyz",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 20,
+				count = 2,
+				name = "Storm Boyz",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 1,
+				timeOffset = 25,
+				count = 2,
+				name = "Storm Boyz",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 2,
+				name = "Storm Boyz",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 15,
+				count = 1,
+				name = "Deff Dread",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 1,
+				timeOffset = 10,
+				count = 2,
+				name = "Nob with Huge Choppa",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}},
+			},
+			{
+				location = 3,
+				timeOffset = 15,
+				count = 1,
+				name = "Nob with Huge Choppa",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}},
+			},
+			{
+				location = 3,
+				timeOffset = 10,
+				count = 2,
+				name = "Nob with Huge Choppa",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}},
+			},
+			{
+				location = 4,
+				timeOffset = 30,
+				count = 1,
+				name = "Battlewagon",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}},
+			},
+		},
+	},
+	-- Wave 17
+	{
+		wavePortrait = "eldar/portraits/eld_lesser_avatar",
+		waveNumber = 17,
+		name = 9115676,
+		bandName = 9115670,
+		teamColour = "Eldar_Saim_Hann",
+		experienceReward = 400,
+		
+		actions = {
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w17_el,
+			},			
+			{
+				delay = 12,
+				action = "playSound",
+				path = introTaunt.w17_el_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/eldar",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "wraithguard",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 2,
+				name = "wraithguard",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 2,
+				name = "wraithguard",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 4,
+				name = "banshee",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 4,
+				name = "banshee",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "banshee",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 1,
+				timeOffset = 30,
+				count = 1,
+				name = "fireprism",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 2,
+				timeOffset = 30,
+				count = 1,
+				name = "fireprism",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+			{
+				location = 4,
+				timeOffset = 45,
+				count = 1,
+				name = "avatar",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+		},
+	},	
+	-- Wave 18
+	{
+		wavePortrait = "chaos_marines/portraits/csm_great_unclean_one",
+		waveNumber = 18,
+		name = 9115675,
+		bandName = 9115670,
+		teamColour = "Death_Guard",
+		experienceReward = 400,
+
+		actions = {
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w18_ch,
+			},
+			{
+				delay = 8,
+				action = "playSound",
+				path = introTaunt.w18_ch_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/chaos",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "bloodletters",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 2,
+				name = "bloodletters",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 1,
+				name = "bloodletters",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 20,
+				count = 1,
+				name = "bloodletters",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 20,
+				count = 2,
+				name = "bloodletters",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 20,
+				count = 2,
+				name = "bloodletters",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 25,
+				count = 1,
+				name = "Chaos Dreadnought",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 25,
+				count = 1,
+				name = "Chaos Dreadnought",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 25,
+				count = 2,
+				name = "Juggernaut",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 25,
+				count = 1,
+				name = "Chaos Predator",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 45,
+				count = 1,
+				name = "Chaos Predator",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 45,
+				count = 1,
+				name = "Great Unclean One",
+				behaviors = {{name="SearchAndDestroy"}, {name="CombatAbilities"}, {name="NonCombatAbilities"}}
+			},
+		},
+	},
+	-- Wave 19
+	{
+		wavePortrait = "imperial_guard/portraits/ig_baneblade",
+		waveNumber = 19,
+		name = 9115677,
+		bandName = 9115673,
+		teamColour = "IG_39th_Cadian_Xenobane",
+        experienceReward = 400,
+        
+        actions = {
+			{
+				delay = 4,
+				action = "playSound",
+				path = introTaunt.w19_ig,
+			},
+			{
+				delay = 10,
+				action = "playSound",
+				path = introTaunt.w19_ig_sfx,
+			},
+		},
+		
+		music = {
+			path = "STREAMED_MUSIC/LAST_STAND/ig",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			{
+				location = 3,
+				timeOffset = 0,
+				count = 2,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 0,
+				count = 2,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 10,
+				count = 2,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 10,
+				count = 2,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 20,
+				count = 2,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 20,
+				count = 2,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 30,
+				count = 2,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 30,
+				count = 2,
+				name = "stormtrooper",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 3,
+				name = "ogryn",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 3,
+				name = "ogryn",
+				behaviors = {
+					{name="CaptureThenDestroy"}, {name="Retaliation"}
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 20,
+				count = 2,
+				name = "ogryn",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 20,
+				count = 2,
+				name = "ogryn",
+				behaviors = {
+					{name="CaptureThenDestroy"}, {name="Retaliation"}
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 40,
+				count = 2,
+				name = "ogryn",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 2,
+				timeOffset = 40,
+				count = 2,
+				name = "ogryn",
+				behaviors = {
+					{name="CaptureThenDestroy"}, {name="Retaliation"}
+				},
+			},
+			{
+				location = 3,
+				timeOffset = 30,
+				count = 1,
+				name = "Leman Russ",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 4,
+				timeOffset = 50,
+				count = 1,
+				name = "Leman Russ",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 1,
+				name = "baneblade",
+				behaviors = {
+					{name="SearchAndDestroy"}, 
+				},
+			},
+		},
+
+	},
+	-- Wave 20
+	{
+		wavePortrait = "space_marines/portraits/sm_gabriel_angelos",
+		waveNumber = 20,
+		name = 9115677,
+		bandName = 9115673,
+		teamColour = "SM_Bloodravens",
+        experienceReward = 400,
+		delay = 35,
+        
+        actions = {
+			{
+				delay = 6,
+				action = "playSound",
+				path = introTaunt.w20_sm,
+			},
+			{
+				delay = 10,
+				action = "playSound",
+				path = introTaunt.w20_sm_sfx,
+			},
+			
+			{
+				action = "setUnitAnimatorAction",
+				players = true,
+				actionName = "abilities\\rumble_camera_shake",
+			},
+			{
+				delay = 0,
+				action = "canSkipNIS",
+				value = false,
+			},
+			{
+				delay = 3,
+				action = "movePlayers",
+				position = {
+					Util_GetPosition(Marker_FromName("entry3", "")),
+					Util_GetPosition(Marker_FromName("entry3", "")),
+					Util_GetPosition(Marker_FromName("entry3", "")),
+				},
+			},
+			{
+				delay = 0,
+				action = "fadeToBlack",
+				value = true,
+				length = 3,
+			},
+			{
+				delay = 1,
+				action = "letterBox",
+				value = true,
+			},
+			{
+				delay = 3,
+				action = "playNIS",
+				nis = "LastStand/NIS/Final_Wave_Intro2",
+			},
+			{
+				delay = 3,
+				action = "fadeToBlack",
+				value = false,
+				length = 3,
+			},
+
+			{
+				delay = 3,
+				action = "spawnEntities",
+				entities = {
+					{
+						ebp = ebps_core_drop_pod_2,
+						player = Survive.data.enemyNPC,
+						position = Util_GetPosition(Marker_FromName("playerStart", "")),
+						facing = Util_GetPosition(Marker_FromName("gabrielPose", "")),
+						teamColour = "SM_Bloodravens",
+						egroup = EGroup_CreateIfNotFound("drop_pod"),
+					},		
+				},
+			},
+			
+			{
+				delay = 4,
+				action = "castPlayerAbility",
+				player = Survive.data.enemyNPC,
+				ability = abil_core_orbital_bombardment,
+				target = Util_GetPosition(Marker_FromName("ob1", "")),
+			},
+			{
+				delay = 5,
+				action = "castPlayerAbility",
+				player = Survive.data.enemyNPC,
+				ability = abil_core_orbital_bombardment,
+				target = Util_GetPosition(Marker_FromName("ob2", "")),
+			},
+			{
+				delay = 5.5,
+				action = "castPlayerAbility",
+				player = Survive.data.enemyNPC,
+				ability = abil_core_orbital_bombardment,
+				target = Util_GetPosition(Marker_FromName("ob3", "")),
+			},
+			{
+				delay = 7,
+				action = "castPlayerAbility",
+				player = Survive.data.enemyNPC,
+				ability = abil_core_orbital_bombardment,
+				target = Util_GetPosition(Marker_FromName("ob4", "")),
+			},
+
+			{
+				delay = 11,
+				action = "spawnUnits",
+				pauseBehaviors = true,
+				units = {
+					{
+						position = Util_GetPosition(Marker_FromName("playerStart", "")),
+						player = Survive.data.enemyNPC,
+						teamColour = "SM_Bloodravens",
+						name = "gabriel",
+						behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+						useSpawnAnimation = false,
+						moveToPosition = Util_GetPosition(Marker_FromName("gabrielPose", "")),
+						sgroup = SGroup_CreateIfNotFound("gabriel"),
+					},		
+				},
+			},
+			{
+				delay = 13,
+				action = "destroyEGroup",
+				egroup = "drop_pod",
+			},
+			{
+				delay = 9,
+				action = "castDCA",
+				position = Util_GetPosition(Marker_FromName("smoke", "")),
+				player = Survive.data.enemyNPC,
+				duration = 5,
+				path = "Abilities\\common\\smoke_5sec",
+			},
+			{
+				delay = 9,
+				action = "castDCA",
+				position = Util_GetPosition(Marker_FromName("smoke", "")),
+				player = Survive.data.enemyNPC,
+				duration = 5,
+				path = "Abilities\\common\\smoke_5sec",
+			},
+			{
+				delay = 9,
+				action = "castDCA",
+				position = Util_GetPosition(Marker_FromName("smoke", "")),
+				player = Survive.data.enemyNPC,
+				duration = 5,
+				path = "Abilities\\common\\smoke_5sec",
+			},
+			{
+				delay = 9,
+				action = "castDCA",
+				position = Util_GetPosition(Marker_FromName("smoke", "")),
+				player = Survive.data.enemyNPC,
+				duration = 5,
+				path = "Abilities\\common\\smoke_5sec",
+			},
+			{
+				delay = 15,
+				action = "castAbility",
+				sgroup = SGroup_CreateIfNotFound("gabriel"),
+				ability = abil_core_merciless_blows,
+				target = Util_GetPosition(Marker_FromName("gabrielStrike", "")),
+			},
+			{
+				delay = 17,
+				action = "spawnUnits",
+				pauseBehaviors = true,
+				units = {
+					{
+						position = Util_GetPosition(Marker_FromName("terminator1", "")),
+						facing = Util_GetPosition(Marker_FromName("gabrielStrike", "")),
+						player = Survive.data.enemyNPC,
+						teamColour = "SM_Bloodravens",
+						name = "Terminator",
+						behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+					},		
+				},
+			},
+			{
+				delay = 17.5,
+				action = "spawnUnits",
+				pauseBehaviors = true,
+				units = {
+					{
+						position = Util_GetPosition(Marker_FromName("terminator2", "")),
+						facing = Util_GetPosition(Marker_FromName("gabrielStrike", "")),
+						player = Survive.data.enemyNPC,
+						teamColour = "SM_Bloodravens",
+						name = "Terminator",
+						behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+					},		
+				},
+			},
+			{
+				delay = 18,
+				action = "spawnUnits",
+				pauseBehaviors = true,
+				units = {
+					{
+						position = Util_GetPosition(Marker_FromName("terminator3", "")),
+						facing = Util_GetPosition(Marker_FromName("gabrielStrike", "")),
+						player = Survive.data.enemyNPC,
+						teamColour = "SM_Bloodravens",
+						name = "Terminator",
+						behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+					},		
+				},
+			},
+			{
+				delay = 20,
+				action = "fadeToBlack",
+				value = true,
+				length = 3,
+			},
+			{
+				delay = 23,
+				action = "fadeToBlack",
+				value = false,
+				length = 3,
+			},
+			{
+				delay = 23,
+				action = "letterBox",
+				value = false,			
+			},
+			{
+				delay = 23,
+				action = "canSkipNIS",
+				value = true,
+			},
+			{
+				delay = 23,
+				action = "moveCameraToLocalPlayer",
+			},
+			{
+				delay = 23,
+				action = "unPauseWaveBehaviors",
+			},
+			{
+				delay = 23,
+				action = "openGates",
+				duration = 60,
+			},
+		},
+		
+		endActions = {
+			{
+				delay = 2,
+				action = "awardPoints",
+				points = 8000,
+				locString = 21250,
+			},
+			{
+				action = "surviveComplete",
+				godrays = 35,
+			},
+			{
+				action = "changeAtmosphere",
+				atmosphere = "maps\\atmospheres\\SURVIVE01.ATMOSPHEREPRESET",
+				duration = 20,
+			},
+			{
+				action = "stopSound",
+				name = "Streamed_SFX/Ambiences/Last_Stand/LS_W20_Atmos"
+			},
+			{
+				delay = 15,
+				action = "doNothing",
+			}
+		},
+		
+		music = {
+			boss = "STREAMED_MUSIC/LAST_STAND/sm_stinger",
+			path = "STREAMED_MUSIC/LAST_STAND/sm",
+			combatValue = 3,
+		},
+		
+		spawnList = {
+			
+			
+			{
+				location = 1,
+				timeOffset = 0,
+				count = 2,
+				name = "space marine",
+				behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+			},
+			{
+				location = 2,
+				timeOffset = 0,
+				count = 2,
+				name = "space marine",
+				behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+			},
+			{
+				location = 3,
+				timeOffset = 20,
+				count = 1,
+				name = "space marine",
+				behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+			},
+			{
+				location = 1,
+				timeOffset = 20,
+				count = 1,
+				name = "space marine",
+				behaviors = {{name="SearchAndDestroy", distance="far"}, {name="Retaliation"}},
+			},
+			{
+				location = 1,
+				timeOffset = 30,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},	
+			{
+				location = 2,
+				timeOffset = 30,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},	
+			{
+				location = 3,
+				timeOffset = 30,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},	
+			{
+				location = 4,
+				timeOffset = 30,
+				count = 1,
+				name = "assault marine",
+				behaviors = {{name="CaptureThenDestroy"}, {name="Retaliation"}},
+			},	
+			{
+				location = 3,
+				timeOffset = 45,
+				count = 1,
+				name = "Dreadnought",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 4,
+				timeOffset = 45,
+				count = 1,
+				name = "Dreadnought",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 45,
+				count = 1,
+				name = "Dreadnought Assault Cannon",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 45,
+				count = 1,
+				name = "Dreadnought Assault Cannon",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 2,
+				timeOffset = 30,
+				count = 1,
+				name = "landraider",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 1,
+				timeOffset = 30,
+				count = 1,
+				name = "Predator",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+			{
+				location = 3,
+				timeOffset = 30,
+				count = 1,
+				name = "Predator",
+				behaviors = {{name="SearchAndDestroy"}},
+			},
+		},
+
+	},
+}

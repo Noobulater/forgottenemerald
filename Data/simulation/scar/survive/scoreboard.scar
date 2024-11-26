@@ -1,0 +1,145 @@
+
+
+ScoreBoard = {
+	displayScore = 0,
+	actualScore = 0,
+	increment = 1,
+	
+	display = {
+		pos = {x=0.5, y=0.1},
+		id = "scoreBoard",
+	},
+	
+	scores = {},	
+	multipliers = {},
+}
+	
+function ScoreBoard_Update()
+	ScoreBoard:Update()
+end
+
+function ScoreBoard:New()
+	if(not Rule_Exists(ScoreBoard_Update))then
+		Rule_Add(ScoreBoard_Update)
+	end
+	self:UpdateScore()
+	self:StartControlMultiplier()
+	self.scoreModifier = self:UpdatePlayerScoreModifiers()
+	return self
+end	
+	
+function ScoreBoard:Update()
+	self:UpdateControlMultiplier()
+	--self:ClearScores()
+	local items = #self.multipliers
+	local index = 0
+	for k,v in pairs(self.multipliers)do 
+		--local str = v.str or " "
+		--local text = "x" .. v.multiplier .. ": ".. str		
+		local pos = Clone(self.display.pos)
+		pos.y = pos.y + (k* 0.02)
+		pos.x = pos.x + 0.04
+		LastStand_SetMultiplier(index, v.locId, v.multiplier)
+		index = index + 1
+		--PrintOnScreen(text, self.display.id .. k, 0, pos)
+	end
+	
+	for k,v in pairs(self.scores)do 
+		local str = v.str or " "
+		local text = "+" .. v.pts .. ": " .. str
+		local pos = Clone(self.display.pos)
+		local id = k + items
+		pos.y = pos.y + ((items + k)* 0.02)
+		pos.x = pos.x + 0.04
+		--PrintOnScreen(text, self.display.id .. id, 0, pos)
+	end
+
+	if(#self.scores > 0)then
+		self:IncrementDisplayValue()
+		self:UpdateScore()
+	end
+end
+
+function ScoreBoard:ClearScores()
+	for i = 1, 100 do 
+		PrintOnScreen("", self.display.id .. i, 0)
+	end
+end
+
+function ScoreBoard:IncrementDisplayValue()
+	local inc = math.ceil(self.scores[1].startPts * self.increment * (0.05 * #self.scores))
+	
+	if(self.scores[1].pts - inc <= 0)then
+		self.displayScore = self.displayScore + self.scores[1].pts
+		table.remove(self.scores, 1)
+		return
+	end
+	
+	self.displayScore = self.displayScore + inc
+	self.scores[1].pts = self.scores[1].pts - inc
+end
+
+function ScoreBoard:UpdateScore()
+	local text = "Score: " .. self.displayScore
+	LastStand_SetScore(self.displayScore)
+	--PrintOnScreen(text, self.display.id, 0, self.display.pos)
+end
+
+function ScoreBoard:GetTotalMultiplier()
+	local m = 1
+	for k,v in pairs(self.multipliers)do 
+		m = m * v.multiplier
+	end
+	
+	return m
+end
+
+function ScoreBoard:AddPoints(pts, str)
+	table.insert(self.scores, {startPts=pts, pts=pts, str=str})
+end
+
+function ScoreBoard:AddMultiplier(multiplier, locId)
+	local t = {multiplier=multiplier, locId=locId}
+	table.insert(self.multipliers, t)
+	
+	return t
+end
+
+function ScoreBoard:StartControlMultiplier()
+	self.controlMultiplierPoints = { }
+	local num = 1
+	while (EGroup_Exists("Point"..num)) do
+		table.insert(self.controlMultiplierPoints, EGroup_FromName("Point"..num))
+		num = num + 1
+	end
+	if (#self.controlMultiplierPoints > 0) then
+		self.controlMuliplier = ScoreBoard:AddMultiplier(1, 9115608)
+	end
+end
+
+function ScoreBoard:UpdateControlMultiplier()
+	if (type(self.controlMuliplier) == "table") then
+		local team = Player_GetTeam(World_GetPlayerAt(1))
+		local multiplier = 0
+		for k, v in pairs(self.controlMultiplierPoints) do
+			local owner = Util_GetPlayerOwner(v)
+			if (owner) and (Player_GetTeam(owner) == team) then
+				multiplier = multiplier + 3
+			end
+		end
+		
+		if (multiplier > 0) then
+			self.controlMuliplier.multiplier = multiplier
+		else
+			self.controlMuliplier.multiplier = 1
+		end
+	end
+end
+
+function ScoreBoard:UpdatePlayerScoreModifiers()
+	local totalModifier = 1
+	for k, v in pairs(Survive.players) do
+		totalModifier = totalModifier + v:GetWargearPointMultiplier()
+	end
+	return totalModifier
+end

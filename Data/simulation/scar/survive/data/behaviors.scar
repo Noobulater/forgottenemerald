@@ -1,0 +1,569 @@
+local Behavior = Survive.Behavior
+
+Behavior.SearchAndDestroy = {
+	["idle"] = function(self, params)
+		if (type(params.distance) == "string") then
+			if (params.distance == "near") then
+				local target = Survive.Targeting.FindNearestEnemyInWorld(self, params)
+				if (target) then
+					Cmd_Attack(self.sgroup, target)
+				end
+			elseif (params.distance == "far") then
+				local target = Survive.Targeting.FindFarthestEnemyInWorld(self, params)
+				if (target) then
+					Cmd_Attack(self.sgroup, target)			
+				end
+			end
+		else
+			local position = Survive.Targeting.FindRandomEnemyPosition(self, params)
+			if (position) then
+				Cmd_AttackMove(self.sgroup, position)
+			end
+		end
+	end,
+	["combat"] = function(self, params)
+		if (self.behavior.stateChanged) then
+			local sgroup = SGroup_CreateReplaceIfFound("temp_retaliation_"..tostring(self))
+			SGroup_GetLastAttacker(self.sgroup, sgroup)
+			if (SGroup_CountSpawned(sgroup) > 0) and (Player_GetID(Util_GetPlayerOwner(sgroup)) == Player_GetID(Survive.data.jerkNPC)) then
+				local target = Survive.Targeting.FindNearestEnemyInWorld(self, params)
+				if (target) then
+					Cmd_Attack(self.sgroup, target)
+					return true
+				end
+			end
+			local squad = SGroup_GetRandomSpawnedSquad(self.sgroup)
+			SGroup_Clear(sgroup)
+			Squad_GetAttackTargets(squad, sgroup)
+			if (SGroup_CountSpawned(sgroup) > 0) and (Player_GetID(Util_GetPlayerOwner(sgroup)) == Player_GetID(Survive.data.jerkNPC)) then
+				local target = Survive.Targeting.FindNearestEnemyInWorld(self, params)
+				if (target) then
+					Cmd_Attack(self.sgroup, target)
+					return true
+				end
+			end
+		end
+	end,
+}
+
+Behavior.SearchAndDestroyWithFriends = {
+	["idle"] = function(self, params)
+		local position = Survive.Targeting.FindRandomEnemyPosition(self)
+		local sgroup = SGroup_CreateReplaceIfFound("SearchAndDestroyWithFriends_temp_group")
+		local range = params.range or 30
+		local tag = params.tag or "chaff"
+		if (type(Survive.assets.unitTags[tag]) == "table") then
+			for i=1, #Survive.assets.unitTags[tag] do
+				if (SGroup_CountSpawned(Survive.assets.unitTags[tag][i].sgroup) > 0)
+				and (Prox_SGroupSGroup(self.sgroup, Survive.assets.unitTags[tag][i].sgroup) <= range) then
+					SGroup_AddGroup(sgroup, Survive.assets.unitTags[tag][i].sgroup)
+				end
+			end
+		end
+		SGroup_AddGroup(sgroup, self.sgroup)
+		Cmd_AttackMove(sgroup, position)
+	end,
+}
+
+Behavior.CaptureThenDestroy = {
+	["idle"] = function(self, params)
+		if (ScoreBoard.controlMuliplier) and (ScoreBoard.controlMuliplier.multiplier > 1) then
+			if not(Util_GetActiveSquadCommand(self.sgroup) == SQUADSTATEID_Capture) then
+				local playerTeam = Player_GetTeam(World_GetPlayerAt(1))
+				local capturablePoints = { }
+				for k, v in pairs(ScoreBoard.controlMultiplierPoints) do
+					local player = Util_GetPlayerOwner(v)
+					if (player) and (Player_GetTeam(player) == playerTeam) then
+						table.insert(capturablePoints, v)
+					end
+				end
+				
+				local target = capturablePoints[World_GetRand(1, #capturablePoints)]
+				Cmd_MoveThenCapture(self.sgroup, target)
+			end
+		else
+			Survive.Behavior.SearchAndDestroy["idle"](self, params)
+		end
+	end,
+}
+
+Behavior.MeleeCombat = {
+	["combat"] = function(self, params)
+		params.distance = params.distance or 14
+		local enemy = Survive.Targeting.FindEnemy(self, params)
+		if not (enemy) then
+			local position = Survive.Targeting.FindRandomEnemyPosition(self, params)
+			if (position) then
+				Cmd_AttackMove(self.sgroup, position)
+			end
+		elseif (params.randomAttack) then
+			Cmd_AttackMeleeSGroup(self.sgroup, enemy)
+		end
+	end,
+}
+
+Behavior.Stalker = {
+	["idle"] = function(self, params)
+		local squad = SGroup_GetRandomSpawnedSquad(self.sgroup)
+		local target = Survive.Targeting.FindWeakestEnemyInWorld(self, params)
+		if (Squad_IsInfiltrated(squad)) and (target) then
+			if not (Behavior.FireAbilities(self, params)) then
+				Cmd_Attack(self.sgroup, target)
+			end
+		elseif (target) then
+			Cmd_AttackMove(self.sgroup, Util_GetRandomPosition(target, 15))
+		else
+			Cmd_AttackMove(self.sgroup, Util_GetRandomPosition(self.sgroup, 15))
+		end
+	end,
+}
+
+Behavior.ReplaceOnFirstCombat = {
+	["combat"] = function(self, params)
+		for k, v in pairs(self.behaviorList) do
+			if (v.name == "ReplaceOnFirstCombat" and v.id == params.id) then
+				v.name = params.replacement
+				if (type(Behavior[v.name].onInit) == "function") then
+					Behavior[v.name].onInit(self)
+				end
+			end
+		end
+	end,
+}
+
+Behavior.PatrolRooms = {
+	["onInit"] = function(self, params)
+		if (type(self.room) == "table") then
+			self.startPosition = self.room:GetPosition()
+		else
+			self.room = Survive.Room.GetRoomPlayerIsNotIn()
+			self.startPosition = self.room:GetPosition()
+		end
+		self.targetPosition = Survive.Room.GetRoomPlayerIsNotIn(self.room)
+		self.targetPosition = self.targetPosition:GetPosition()
+		self.patrol = false
+	end,
+	["idle"] = function(self, params)
+		local position
+		if (self.patrol) then
+			position = self.targetPosition
+			self.patrol = false
+		else
+			position = self.startPosition
+			self.patrol = true
+		end
+		Cmd_AttackMove(self.sgroup, position)
+	end,
+}
+
+Behavior.RandomRoomMovement = {
+	["idle"] = function(self, params)
+		local room
+		if (params.avoidPlayerRoom) then
+			room = Survive.Room.GetRoomPlayerIsNotIn()
+		else
+			room = Survive.GetRandomRoom()
+		end
+		if (params.attackMove) then
+			Cmd_AttackMove(self.sgroup, room:GetPosition())
+		else
+			Cmd_Move(self.sgroup, room:GetPosition())
+		end
+	end,
+}
+
+Behavior.Wander = {
+	["idle"] = function(self, params)
+		local position = Survive.Targeting.FindPositionOffset(self, params)
+		Cmd_Move(self.sgroup, position, true)
+	end,
+}
+
+Behavior.Protector = {
+	["onInit"] = function(self, params)
+		params.distance = params.distance or 25
+		params.friend = params.friend or Survive.Targeting.FindAlly(self, params) or self.sgroup
+		if (type(params.friend) == "string") then
+			local wave = WaveManager.waves[WaveManager.currentWave]
+			for k, v in pairs(wave.units) do
+				if (v.data.name == params.friend) and (v.spawned) then
+					params.friend = v.sgroup
+					return true
+				end
+			end
+			params.friend = Survive.Targeting.FindAlly(self, params) or self.sgroup
+		end
+	end,
+	["idle"] = function(self, params)
+		if (SGroup_CountSpawned(params.friend) > 0) then
+			local position = Util_GetRandomPosition(params.friend, math.floor((params.distance/2)), math.floor((params.distance/4)))
+			Cmd_AttackMove(self.sgroup, position)
+		else
+			params.friend = Survive.Targeting.FindAlly(self, params) or self.sgroup
+		end
+	end,
+	["moving"] = function(self, params)
+		if (SGroup_CountSpawned(params.friend) > 0) then
+			local sgroup = SGroup_CreateReplaceIfFound("")
+			SGroup_GetLastAttacker(params.friend, sgroup)
+			if (SGroup_CountSpawned(sgroup) > 0) then
+				Cmd_Attack(self.sgroup, sgroup)
+				return true
+			end
+			local squad = SGroup_GetRandomSpawnedSquad(params.friend)
+			Squad_GetAttackTargets(squad, sgroup)
+			if (SGroup_CountSpawned(sgroup) > 0) then
+				Cmd_Attack(self.sgroup, sgroup)
+				return true
+			end
+			return false
+		else
+			params.friend = Survive.Targeting.FindAlly(self, params) or self.sgroup
+		end
+	end,
+	["combat"] = function(self, params)
+		if (SGroup_CountSpawned(params.friend) > 0) then
+			local protectorPos = Util_GetPosition(self.sgroup)
+			local friendPos = Util_GetPosition(params.friend)
+			if not (World_PointPointProx(protectorPos, friendPos, params.distance)) then
+				if not (Survive.Behavior.Protector["moving"](self, params)) then
+					Cmd_Move(self.sgroup, friendPos)
+				end
+				return true
+			end
+			if (not (Squad_IsAttacking(SGroup_GetSpawnedSquadAt(self.sgroup, 1), 2)))
+			and (not (SGroup_IsMoving(self.sgroup, ANY))) then
+				if not (Survive.Behavior.Protector["moving"](self, params)) then
+					Survive.Behavior.Retaliation["command"](self, params)
+					return true
+				end
+			end
+			return false
+		else
+			params.friend = Survive.Targeting.FindAlly(self, params) or self.sgroup
+		end
+	end,
+}
+
+Behavior.Retaliation = {
+	["combat"] = function(self, params)
+		if (self.behavior.stateChanged) then
+			local sgroup = SGroup_CreateReplaceIfFound("temp_retaliation_"..tostring(self))
+			SGroup_GetLastAttacker(self.sgroup, sgroup)
+			if (SGroup_CountSpawned(sgroup) > 0) and (Player_GetID(Util_GetPlayerOwner(sgroup)) ~= Player_GetID(Survive.data.jerkNPC)) then
+				Cmd_Attack(self.sgroup, sgroup)
+				return true
+			end
+			local squad = SGroup_GetRandomSpawnedSquad(self.sgroup)
+			SGroup_Clear(sgroup)
+			Squad_GetAttackTargets(squad, sgroup)
+			if (SGroup_CountSpawned(sgroup) > 0) and (Player_GetID(Util_GetPlayerOwner(sgroup)) ~= Player_GetID(Survive.data.jerkNPC)) then
+				Cmd_Attack(self.sgroup, sgroup)
+				return true
+			end
+			return false
+		end
+	end,
+	["command"] = function(self, params)
+		local sgroup = SGroup_CreateReplaceIfFound("temp_retaliation_"..tostring(self))
+		SGroup_GetLastAttacker(self.sgroup, sgroup)
+		if (SGroup_CountSpawned(sgroup) > 0) and (Player_GetID(Util_GetPlayerOwner(sgroup)) ~= Player_GetID(Survive.data.jerkNPC)) then
+			Cmd_Attack(self.sgroup, sgroup)
+			return true
+		end
+		local squad = SGroup_GetRandomSpawnedSquad(self.sgroup)
+		SGroup_Clear(sgroup)
+		Squad_GetAttackTargets(squad, sgroup)
+		if (SGroup_CountSpawned(sgroup) > 0) and (Player_GetID(Util_GetPlayerOwner(sgroup)) ~= Player_GetID(Survive.data.jerkNPC)) then
+			Cmd_Attack(self.sgroup, sgroup)
+			return true
+		end
+		return false
+	end,
+}
+
+Behavior.CallFriendsInCombat = {
+	["combat"] = function(self, params, behavior)
+		local sgroup = SGroup_CreateReplaceIfFound("CallFriendsInCombat_temp_group")
+		local position = Util_GetPosition(self.sgroup)
+		local tag = params.tag or "chaff"
+		if (type(Survive.assets.unitTags[tag]) == "table") then
+			local rand = World_GetRand(1, #Survive.assets.unitTags[tag])
+			if (SGroup_CountSpawned(Survive.assets.unitTags[tag][rand].sgroup) > 0) then
+				SGroup_AddGroup(sgroup, Survive.assets.unitTags[tag][rand].sgroup)
+				Cmd_AttackMove(sgroup, position)
+			end
+		end
+	end,
+}
+
+Behavior.HitAndRun = {
+	["combat"] = function(self, params)
+		local minTime = params.minTime or 5
+		local maxTime = params.maxTime or 15
+		self.runTime = self.runTime or (World_GetGameTime() + World_GetRand(minTime, maxTime))
+		if (self.runTime <= World_GetGameTime()) and (not self.running) then
+			local position = Survive.GetRandomRoom()
+			position = position:GetPosition()
+			Cmd_Move(self.sgroup, position)
+			self.running = true
+		end
+	end,
+	["idle"] = function(self, params)
+		if (self.runTime) then
+			self.runTime = nil
+			self.running = false
+		end
+	end
+}
+
+Behavior.RandomCombatTargets = {
+	["combat"] = function(self, params)
+		local target = Survive.Targeting.FindEnemy(self, params)
+		if (target) then
+			Cmd_Attack(self.sgroup, target)
+		end
+	end,
+}
+
+Behavior.AttackWeakestTarget = {
+	["combat"] = function(self, params)
+		local target = Survive.Targeting.FindWeakestEnemy(self, params)
+		if (target) then
+			Cmd_Attack(self.sgroup, target)
+		end
+	end,
+}
+
+Behavior.AttackStrongestTarget = {
+	["combat"] = function(self, params)
+		local target = Survive.Targeting.FindStrongestEnemy(self, params)
+		if (target) then
+			Cmd_Attack(self.sgroup, target)
+		end
+	end,
+}
+
+Behavior.CombatAbilities = {
+	["combat"] = function(self, params)
+		Behavior.FireAbilities(self, params)
+	end,
+}
+
+Behavior.CombatAbilitiesDebug = {
+	["combat"] = function(self, params)
+		Behavior.FireAbilitiesDebug(self, params)
+		print("CombatAbilitiesDebug - WorldTime = "..World_GetGameTime().." next time set to: "..tostring(self.behavior.stateTime + self.behavior.stateWaitTime))
+		print(self.data.name.." has active command: "..tostring(state)..", and state: "..self.behavior.state)
+	end,
+}
+
+Behavior.NonCombatAbilitiesDebug = {
+	["idle"] = function(self, params)
+		Behavior.FireAbilitiesDebug(self, params)
+		print("CombatAbilitiesDebug - WorldTime = "..World_GetGameTime().." next time set to: "..tostring(self.behavior.stateTime + self.behavior.stateWaitTime))
+		print(self.data.name.." has active command: "..tostring(state)..", and state: "..self.behavior.state)
+	end,
+	["moving"] = function(self, params)
+		Behavior.FireAbilitiesDebug(self, params)
+		print("CombatAbilitiesDebug - WorldTime = "..World_GetGameTime().." next time set to: "..tostring(self.behavior.stateTime + self.behavior.stateWaitTime))
+		print(self.data.name.." has active command: "..tostring(state)..", and state: "..self.behavior.state)
+	end,
+}
+
+Behavior.NonCombatAbilities = {
+	["idle"] = function(self, params)
+		Behavior.FireAbilities(self, params)
+	end,
+	["moving"] = function(self, params)
+		Behavior.FireAbilities(self, params)
+	end,
+}
+
+Behavior.ToggleAbilities = {
+	["onInit"] = function(self, params)
+		params.toggleAbilities = { }
+		for k, v in pairs(self.data.abilities) do
+			if (v.abilityBehavior == params.abilityBehavior) then
+				v.toggleOn = v.toggleOn or "combat"
+				v.id = v.id or "defaultToggle"
+				self[v.id] = false
+				table.insert(params.toggleAbilities, v)
+			end
+		end
+		if (#params.toggleAbilities < 1) then
+			for k, v in pairs(self.behaviorList) do
+				if (v == params) then
+					v = nil
+				end
+			end
+		end
+	end,
+	["idle"] = function(self, params)
+		Behavior.FireToggleAbilities(self, params, "idle")
+	end,
+	["moving"] = function(self, params)
+		Behavior.FireToggleAbilities(self, params, "moving")
+	end,
+	["combat"] = function(self, params)
+		Behavior.FireToggleAbilities(self, params, "combat")
+	end,
+}
+
+Behavior.SelfPreservation = {
+	["combat"] = function(self, params)
+		local percent = params.percent or 0.3
+		if (SGroup_GetAvgHealth(self.sgroup) < percent) then
+			local squad = SGroup_GetRandomSpawnedSquad(self.sgroup)
+			Survive_RetreatBehindGate(nil, squad)
+		end
+	end,
+}
+
+Behavior.CheckState = {
+	["idle"] = function(self, params)
+		local state = Util_GetActiveSquadCommand(self.sgroup)
+		print(self.data.name.." has active command: "..tostring(state)..", and state: "..self.behavior.state)
+	end,
+	["moving"] = function(self, params)
+		local state = Util_GetActiveSquadCommand(self.sgroup)
+		print(self.data.name.." has active command: "..tostring(state)..", and state: "..self.behavior.state)
+	end,
+	["combat"] = function(self, params)
+		local state = Util_GetActiveSquadCommand(self.sgroup)
+		print(self.data.name.." has active command: "..tostring(state)..", and state: "..self.behavior.state)
+	end,
+}
+
+Behavior.Escort = {
+
+    command = function(self, cmd, position)
+        if(cmd == "Escort")then
+            Cmd_AttackMove(self.sgroup, position)            
+        end
+    end,
+}
+
+Behavior.ReviveUnconscious = {
+	["idle"] = function(self, params)
+		local sgroup = Survive.Targeting.FindAlly(self, {distance=100, which="Unconscious"})
+		if not (sgroup) then return false end
+		SGroup_FilterUnconscious(sgroup, FILTER_KEEP)
+		if (SGroup_CountSpawned(sgroup) > 0) then
+			local squad = SGroup_GetRandomSpawnedSquad(sgroup)
+			Cmd_Ability(self.sgroup, Util_GetAbilityID("ability\\core\\race_marine\\cpr"), squad)
+			self.behavior.stateWaitTime = 10
+		end
+	end,
+	["moving"] = function(self, params)
+		local sgroup = Survive.Targeting.FindAlly(self, {distance=65, which="Unconscious"})
+		if not (sgroup) then return false end
+		SGroup_FilterUnconscious(sgroup, FILTER_KEEP)
+		if (SGroup_CountSpawned(sgroup) > 0) then
+			local squad = SGroup_GetRandomSpawnedSquad(sgroup)
+			Cmd_Ability(self.sgroup, Util_GetAbilityID("ability\\core\\race_marine\\cpr"), squad)
+			self.behavior.stateWaitTime = 10
+		end
+	end,
+	["combat"] = function(self, params)
+		if (SGroup_GetAvgHealth(self.sgroup) > 0.5) then
+			local sgroup = Survive.Targeting.FindAlly(self, {distance=45, which="Unconscious"})
+			if not (sgroup) then return false end
+			SGroup_FilterUnconscious(sgroup, FILTER_KEEP)
+			if (SGroup_CountSpawned(sgroup) > 0) then
+				local squad = SGroup_GetRandomSpawnedSquad(sgroup)
+				Cmd_Ability(self.sgroup, Util_GetAbilityID("ability\\core\\race_marine\\cpr"), squad)
+				self.behavior.stateWaitTime = 10
+			end
+		end
+	end,
+}
+
+Behavior.BloodletterCorpseExplode = {
+	["combat"] = function(self, params)
+		local sgroup = Survive.Targeting.GetAllFriendlyUnconscious(self, params)
+		if (sgroup) then
+			Behavior.SpawnBloodletterCorpseExplode(self, params, sgroup)
+		end
+	end,
+}
+
+function Behavior.SpawnBloodletterCorpseExplode(self, params, sgroup)
+	for i=1, SGroup_CountSpawned(sgroup) do
+		local squad = SGroup_GetSpawnedSquadAt(sgroup, 1)
+		local position = Util_GetPosition(squad)
+		local behaviors = {
+			{ name = "CombatAbilities" },
+			{ name = "NonCombatAbilities" },
+			{ name = "SearchAndDestroy" },
+		}
+		local unit = Survive.Unit:GetFromName(self.player, "bloodletters")
+		unit:Spawn(position, behaviors)
+		WaveManager:RegisterUnit(unit)
+		Util_SetAnimatorAction(unit.sgroup, "munition_type\\sm_chainsword\\hitfx\\lrg_unit_flesh_armor")
+		Squad_Destroy(squad)
+		Util_SetAnimatorState(unit.sgroup, "teleport", "breakdown")
+		SGroup_SetInvulnerable(unit.sgroup, 0.1, 0.8)
+		Rule_AddOneShot(function()
+			Util_SetAnimatorState(unit.sgroup, "teleport", "off")
+		end, 0.8)
+	end
+end
+
+Behavior.ChaosLordReviveDoppelgangers = {
+	["combat"] = function(self, params)
+		if (self.behavior.stateChanged) and (not self.hasRevivedDoppelgangers) then
+			local sgroup = Survive.Targeting.GetAllFriendlyUnconscious(self, params)
+			if (sgroup) then
+				Behavior.ReviveDoppelgangers(self, params, sgroup)
+				self.hasRevivedDoppelgangers = true
+			end
+		end
+	end,
+}
+
+function Behavior.ReviveDoppelgangers(self, params, sgroup)
+	for i=1, SGroup_CountSpawned(sgroup) do
+		local squad = SGroup_GetSpawnedSquadAt(sgroup, 1)
+		local position = Util_GetPosition(squad)
+		local behaviors = {
+			{ name = "CombatAbilities" },
+			{ name = "NonCombatAbilities" },
+			{ name = "SearchAndDestroy" },
+		}
+		local unit = Survive.assets.entities[Entity_GetGameID(Squad_EntityAt(squad, 0))]
+		if (unit.doppelganger) then
+			Util_SetAnimatorAction(unit.sgroup, "ui\\abilities\\medkit")
+			SGroup_SetAvgHealth(unit.sgroup, 1)
+		end
+	end
+end
+
+Behavior.DetonateExplosives = {
+	["combat"] = function(self, params)
+		local player = Util_GetPlayerOwner(self.sgroup)
+		local egroup = Player_GetEntities(player)
+		local distance = params.distance or 5
+		local entities = { }
+		for i=1, EGroup_CountSpawned(egroup) do
+			entities[i] = EGroup_GetSpawnedEntityAt(egroup, i)
+		end
+		for entityKey, entity in pairs(entities) do
+			if (Entity_GetBlueprintName(entity) == params.explosive) then
+				local explosivePosition = Util_GetPosition(entity)
+				local targetingParams = { distance = 70 }
+				local enemySGroup = Survive.Targeting.GetAllNearbyEnemies(self, targetingParams)
+				if (enemySGroup) then
+					for j=1, SGroup_CountSpawned(enemySGroup) do
+						local enemyPosition = Util_GetPosition(SGroup_GetSpawnedSquadAt(enemySGroup, j))
+						local pointToPointDistance = World_DistancePointToPoint(explosivePosition, enemyPosition)
+						if (pointToPointDistance <= distance) then
+							Entity_Kill(entity)
+							break
+						end
+					end
+				end
+			end
+		end
+	end,
+}
