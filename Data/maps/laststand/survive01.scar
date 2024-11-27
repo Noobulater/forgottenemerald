@@ -1,8 +1,0 @@
-
-Scar_AddInit(function()
-    Rule_AddOneShot(function()
-        import("Survive//Survive.scar")
-    end, 0)
-end)
-
-
