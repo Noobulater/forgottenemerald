@@ -180,4 +180,3 @@ archive.31 = finalstand\Archives\fe_eldar_data_data.sga
 archive.32 = finalstand\Archives\fe_ig_data_data.sga
 archive.33 = finalstand\Archives\fe_marine_data_data.sga
 
-; Note: have to add this to prevent end of file corruption
