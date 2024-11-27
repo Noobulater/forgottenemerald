@@ -146,11 +146,11 @@ folder.01 = GameAssets\Locale\TChinese\Movies
 [data:common]
 folder.01 = finalstand\Data
 folder.02 = GameAssets\Data
-archive.01 = finalstand\Archives\finalstand_data.sga
-archive.02 = finalstand\Archives\fe_chaos_data_data.sga
-archive.03 = finalstand\Archives\fe_eldar_data_data.sga
+archive.01 = finalstand\Archives\fe_ig_data_data.sga
+archive.02 = finalstand\Archives\fe_ig_data_data.sga
+archive.03 = finalstand\Archives\fe_ig_data_data.sga
 archive.04 = finalstand\Archives\fe_ig_data_data.sga
-archive.05 = finalstand\Archives\fe_marine_data_data.sga
+archive.05 = finalstand\Archives\finalstand_data.sga
 archive.06 = GameAssets\Archives\005_laststand.sga
 archive.07 = GameAssets\Archives\005_multiplayer.sga
 archive.08 = GameAssets\Archives\005_data.sga
