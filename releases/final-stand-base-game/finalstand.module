@@ -146,11 +146,11 @@ folder.01 = GameAssets\Locale\TChinese\Movies
 [data:common]
 folder.01 = finalstand\Data
 folder.02 = GameAssets\Data
-archive.01 = GameAssets\Archives\005_laststand.sga
-archive.02 = GameAssets\Archives\005_laststand.sga
-archive.03 = GameAssets\Archives\005_laststand.sga
-archive.04 = GameAssets\Archives\005_laststand.sga
-archive.05 = GameAssets\Archives\005_laststand.sga
+archive.01 = finalstand\Archives\forgottenemerald_data_data.sga
+archive.02 = finalstand\Archives\forgottenemerald_data_data.sga
+archive.03 = finalstand\Archives\forgottenemerald_data_data.sga
+archive.04 = finalstand\Archives\forgottenemerald_data_data.sga
+archive.05 = finalstand\Archives\forgottenemerald_data_data.sga
 archive.06 = GameAssets\Archives\005_laststand.sga
 archive.07 = GameAssets\Archives\005_multiplayer.sga
 archive.08 = GameAssets\Archives\005_data.sga
